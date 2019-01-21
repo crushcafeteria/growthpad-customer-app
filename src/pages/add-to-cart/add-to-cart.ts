@@ -4,6 +4,10 @@ import {LoaderProvider} from "../../providers/loader/loader";
 import {OrderProvider} from "../../providers/order/order";
 import {OrdersPage} from "../orders/orders";
 import {ToastProvider} from "../../providers/toast/toast";
+import {Storage} from "@ionic/storage";
+import config from "../../config";
+import {LocationPage} from "../location/location";
+import {ProfilePage} from "../profile/profile";
 
 @IonicPage()
 @Component({
@@ -14,14 +18,27 @@ export class AddToCartPage {
 
     ad = null;
     instructions = null;
+    user;
+    config;
+    eventOptions = null;
 
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 public viewCtrl: ViewController,
                 public loader: LoaderProvider,
                 public orderProvider: OrderProvider,
-                public toast: ToastProvider) {
+                public toast: ToastProvider,
+                public storage: Storage) {
         this.ad = navParams.get('ad');
+        this.eventOptions = navParams.get('eventOptions');
+
+        this.storage.get('profile').then(profile => {
+            this.user = profile;
+        });
+
+        this.config = config
+
+        console.log(this.eventOptions, this.ad);
     }
 
     closeModal() {
@@ -31,7 +48,7 @@ export class AddToCartPage {
     createOrder() {
         let loader = this.loader.show('Ordering...');
 
-        this.orderProvider.createOrder(this.ad, this.instructions).then(res => {
+        this.orderProvider.createOrder(this.ad, this.instructions, this.eventOptions).then(res => {
             if (res['status'] == 'OK') {
                 this.toast.show('Your order has been received!', 6000);
                 this.navCtrl.setRoot(OrdersPage);
@@ -39,6 +56,13 @@ export class AddToCartPage {
                 this.toast.show('An error occured while processing your order');
             }
             loader.dismiss();
+        });
+    }
+
+    changeLocation() {
+        this.navCtrl.push(LocationPage, {
+            next: ProfilePage,
+            title: 'Change delivery location'
         });
     }
 

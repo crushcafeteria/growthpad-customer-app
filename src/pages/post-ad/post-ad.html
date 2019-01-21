@@ -1,0 +1,204 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Post an advert</ion-title>
+        <ion-buttons end>
+            <button ion-button (click)="goHome()" icon-start *ngIf="step==1">
+                <ion-icon name="home"></ion-icon>
+                Home
+            </button>
+            <button ion-button (click)="goBack(1)" icon-start *ngIf="step==2">
+                <ion-icon name="arrow-back"></ion-icon>
+                Back
+            </button>
+            <button ion-button (click)="goBack(2)" icon-start *ngIf="step==3">
+                <ion-icon name="arrow-back"></ion-icon>
+                Back
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+    <ion-row *ngIf="step==1">
+        <ion-col col-12>
+            <h4 text-center text-muted>1. Enter advert details</h4>
+            <hr>
+        </ion-col>
+        <ion-col>
+            <div class="info" text-center>Please fill in all the fields below and tap the Green button</div>
+
+            <form [formGroup]="postAdForm" (ngSubmit)="saveAd()">
+                <ion-item>
+                    <ion-label>Category</ion-label>
+                    <ion-select formControlName="category">
+                        <ion-option value="AGROVET">Agrovet</ion-option>
+                        <ion-option value="CATERING">Catering Services</ion-option>
+                        <ion-option value="HOTELIER">Hotelier</ion-option>
+                    </ion-select>
+                </ion-item>
+                <div *ngIf="!postAdForm.controls.category.valid && postAdForm.controls.category.dirty" form-error>
+                    Choose a category
+                </div>
+
+                <ion-item>
+                    <ion-label>Title</ion-label>
+                    <ion-input type="text" formControlName="name" text-right></ion-input>
+                </ion-item>
+                <div *ngIf="!postAdForm.controls.name.valid && postAdForm.controls.name.dirty" form-error>
+                    Enter ad title
+                </div>
+
+                <ion-item>
+                    <ion-label>Description</ion-label>
+                    <ion-textarea formControlName="description" text-right></ion-textarea>
+                </ion-item>
+                <div *ngIf="!postAdForm.controls.description.valid && postAdForm.controls.description.dirty" form-error>
+                    Enter a description
+                </div>
+
+                <ion-item>
+                    <ion-label>Telephone</ion-label>
+                    <ion-input type="number" formControlName="telephone" text-right></ion-input>
+                </ion-item>
+                <div *ngIf="!postAdForm.controls.telephone.valid && postAdForm.controls.telephone.dirty" form-error>
+                    Enter a telephone number
+                </div>
+
+                <ion-item>
+                    <ion-label>Email</ion-label>
+                    <ion-input type="text" formControlName="email" text-right></ion-input>
+                </ion-item>
+                <div *ngIf="!postAdForm.controls.email.valid && postAdForm.controls.email.dirty" form-error>
+                    Enter an email address
+                </div>
+
+                <ion-item>
+                    <ion-label>Price (Ksh)</ion-label>
+                    <ion-input type="number" formControlName="price" text-right></ion-input>
+                </ion-item>
+                <div *ngIf="!postAdForm.controls.price.valid && postAdForm.controls.price.dirty" form-error>
+                    Enter a price
+                </div>
+
+                <ion-col margin-left>
+                    <button ion-button type="submit" [disabled]="!postAdForm.valid" block color="secondary" icon-end>
+                        Upload some pictures
+                        <ion-icon name="arrow-round-forward"></ion-icon>
+                    </button>
+                </ion-col>
+            </form>
+
+        </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="step==2">
+        <ion-col col-12>
+            <h4 text-center text-muted>2. Upload pictures</h4>
+            <hr>
+            <div class="info" text-center>Please select at least 1 picture</div>
+        </ion-col>
+
+        <ion-col col-4 tappable (click)="uploadPicture('A')">
+            <img src="http://placehold.it/200x200?text=Tap Me" *ngIf="!pictures.A">
+            <img [src]="'data:image/jpeg;base64,'+pictures.A" *ngIf="pictures.A">
+        </ion-col>
+        <ion-col col-4 tappable (click)="uploadPicture('B')">
+            <img src="http://placehold.it/200x200?text=Tap Me" *ngIf="!pictures.B">
+            <img [src]="'data:image/jpeg;base64,'+pictures.B" *ngIf="pictures.B">
+        </ion-col>
+        <ion-col col-4 tappable (click)="uploadPicture('C')">
+            <img src="http://placehold.it/200x200?text=Tap Me" *ngIf="!pictures.C">
+            <img [src]="'data:image/jpeg;base64,'+pictures.C" *ngIf="pictures.C">
+        </ion-col>
+
+        <ion-col col-12 *ngIf="totalPics > 0">
+            <button ion-button color="secondary" block icon-end (click)="setLocation()">
+                Add a location
+                <ion-icon name="arrow-round-forward"></ion-icon>
+            </button>
+        </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="step==3">
+
+        <ion-col col-12>
+            <h4 text-center text-muted>3. Review and publish</h4>
+            <hr>
+        </ion-col>
+
+        <!--Ad info-->
+        <ion-col col-12 no-padding>
+            <ion-card>
+                <ion-list no-border>
+                    <ion-item>
+                        Name
+                        <span item-end color="dark">
+                            {{pendingAd.name}}
+                        </span>
+                    </ion-item>
+                    <ion-item>
+                        Description
+                        <p color="dark" style="overflow: auto;text-overflow: unset;">
+                            {{pendingAd.description}}
+                        </p>
+                    </ion-item>
+                    <ion-item>
+                        Category
+                        <span item-end color="dark">
+                            {{pendingAd.category}}
+                        </span>
+                    </ion-item>
+                    <ion-item>
+                        Email
+                        <span item-end color="dark">
+                            {{pendingAd.email}}
+                        </span>
+                    </ion-item>
+                    <ion-item>
+                        Telephone
+                        <span item-end color="dark">
+                            {{pendingAd.telephone}}
+                        </span>
+                    </ion-item>
+                    <ion-item>
+                        Price
+                        <span item-end color="dark">
+                            Ksh {{pendingAd.price | number}}
+                        </span>
+                    </ion-item>
+                    <ion-item>
+                        Location
+                        <span item-end color="dark">
+                            {{location.display_name.split(',')[0]}}
+                        </span>
+                    </ion-item>
+                </ion-list>
+            </ion-card>
+        </ion-col>
+
+        <!--Picture info-->
+        <ion-row margin-top>
+            <ion-col col-4 *ngIf="pictures.A">
+                <img [src]="'data:image/jpeg;base64,'+pictures.A">
+            </ion-col>
+            <ion-col col-4 *ngIf="pictures.B">
+                <img [src]="'data:image/jpeg;base64,'+pictures.B">
+            </ion-col>
+            <ion-col col-4 *ngIf="pictures.C">
+                <img [src]="'data:image/jpeg;base64,'+pictures.C">
+            </ion-col>
+
+            <ion-col col-12>
+                <button ion-button color="secondary" block icon-start (click)="publishAd()">
+                    <ion-icon name="cloud-upload"></ion-icon>
+                    Publish Advert
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-row>
+
+</ion-content>

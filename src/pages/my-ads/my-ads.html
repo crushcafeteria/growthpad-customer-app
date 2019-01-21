@@ -1,0 +1,55 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>My Ads</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+    <!--Loader-->
+    <ion-row *ngIf="isLoading">
+        <ion-col col-3></ion-col>
+        <ion-col col-6 text-center text-muted>
+            <img src="assets/images/loader.gif" alt="">
+            <h5>Loading...</h5>
+        </ion-col>
+    </ion-row>
+
+    <ion-row>
+        <ion-col class="pins">
+            <div *ngFor="let ad of ads" class="pin">
+                <a href="#!" (click)="viewAd(ad)">
+                    <ion-card>
+                        <img [src]="ad.featured_picture"/>
+                        <ion-card-content>
+                            <div class="name ellipsize">{{ad.name}}</div>
+                            <small text-muted>Ksh {{ad.price | number}}</small>
+                            <br>
+                            <small text-muted icon-start>
+                                <ion-icon name="pin"></ion-icon>
+                                {{ad.location.display_name.split(',')[0]}}
+                            </small>
+                        </ion-card-content>
+                    </ion-card>
+                </a>
+            </div>
+        </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="!isLoading && !ads.length">
+        <ion-col text-center text-muted>
+            <ion-icon name="alert" style="font-size: 4em;"></ion-icon>
+            <br>
+            <h4>You have not posted any adverts</h4>
+            <br>
+            <button ion-button icon-start (click)="goToPostAd()">
+                <ion-icon name="add-circle"></ion-icon>
+                Post an ad
+            </button>
+        </ion-col>
+    </ion-row>
+
+</ion-content>

@@ -1,9 +1,10 @@
 <ion-header>
-    <ion-navbar>
+    <ion-navbar color="dark">
         <ion-title>Keyword Search</ion-title>
         <ion-buttons end>
-            <button ion-button (click)="dismiss()">
-                <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+            <button ion-button (click)="dismiss()" icon-start>
+                <ion-icon name="close"></ion-icon>
+                Cancel
             </button>
         </ion-buttons>
     </ion-navbar>
@@ -12,9 +13,20 @@
 
 <ion-content padding>
 
-    <ion-col>
+    <ion-col text-center>
         <p>Enter a keyword</p>
-        <ion-searchbar (ionInput)="saveKeyword($event)"></ion-searchbar>
+        <ion-searchbar (ionInput)="search($event)"></ion-searchbar>
+
+        <button ion-button color="secondary" icon-start block (click)="startSearch()" [disabled]="!q">
+            <ion-icon name="checkmark-circle"></ion-icon>
+            Search
+        </button>
     </ion-col>
+
+    <ion-row>
+        <ion-col col-12>
+
+        </ion-col>
+    </ion-row>
 
 </ion-content>

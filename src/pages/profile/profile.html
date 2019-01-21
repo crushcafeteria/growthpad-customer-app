@@ -14,7 +14,8 @@
     <ion-row>
         <ion-col id="profile-info" padding>
             <img class="profile-image" [src]="picPreview" (click)="showPictureOptions()" *ngIf="picPreview">
-            <img class="profile-image" src="assets/images/avatar.png" (click)="showPictureOptions()" *ngIf="!picPreview">
+            <img class="profile-image" src="assets/images/avatar.png" (click)="showPictureOptions()"
+                 *ngIf="!picPreview">
             <h3 id="profile-name">{{user?.name}}</h3>
             <p class="profile-description">
                 {{config.genders[user?.gender]}}
@@ -23,7 +24,8 @@
                 <ion-icon name="image"></ion-icon>
                 Change Picture
             </button>
-            <button ion-button icon-left (click)="uploadImage()" small color="secondary" *ngIf="canUpload" [disabled]="savingDisabled">
+            <button ion-button icon-left (click)="uploadImage()" small color="secondary" *ngIf="canUpload"
+                    [disabled]="savingDisabled">
                 <ion-icon name="{{savingIcon}}"></ion-icon>
                 {{savingText}}
             </button>
@@ -54,7 +56,8 @@
             </ion-card>
             <ion-col col-12 text-center no-padding>
                 <button ion-button icon-left block clear color="primary" small (click)="showEditProfile()">
-                    <ion-icon name="build"></ion-icon> Manage your profile
+                    <ion-icon name="build"></ion-icon>
+                    Manage your profile
                 </button>
             </ion-col>
         </ion-col>
@@ -68,7 +71,8 @@
                     YOUR LOCATION
                 </ion-card-header>
                 <ion-list no-border>
-                    <img src="https://www.mapquestapi.com/staticmap/v5/map?key={{config.mapquest_key}}&locations={{user?.location.display_name}}&zoom=14&size=400,300">
+                    <img
+                        src="https://www.mapquestapi.com/staticmap/v5/map?key={{config.mapquest_key}}&locations={{user?.location.display_name}}&zoom=14&size=400,300">
                     <ion-item>
                         <ion-icon name="pin" item-start large></ion-icon>
                         <h2>{{user?.location.display_name}}</h2>
@@ -78,7 +82,8 @@
             </ion-card>
             <ion-col col-12 text-center no-padding>
                 <button ion-button icon-left color="primary" small block clear (click)="changeLocation()">
-                    <ion-icon name="build"></ion-icon> Change Location
+                    <ion-icon name="build"></ion-icon>
+                    Change Location
                 </button>
             </ion-col>
         </ion-col>

@@ -12,13 +12,14 @@ export class ViewAdPage {
 
     ad = null;
     profile = null;
+    eventOptions = null;
 
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 public storage: Storage,
                 public modalCtrl: ModalController) {
         this.ad = navParams.get('ad');
-        console.log(this.ad)
+        this.eventOptions = navParams.get('eventOptions');
 
         this.storage.get('profile').then(profile => {
             this.profile = profile;
@@ -26,9 +27,10 @@ export class ViewAdPage {
     }
 
     addToCart(ad) {
-        this.modalCtrl.create(AddToCartPage, {
-            ad: ad
-        }).present();
+        this.navCtrl.push(AddToCartPage, {
+            ad: ad,
+            eventOptions: this.eventOptions
+        });
     }
 
 }

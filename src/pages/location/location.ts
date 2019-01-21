@@ -1,13 +1,14 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams} from 'ionic-angular';
+import {Events, IonicPage, NavController, NavParams} from 'ionic-angular';
 import {SupportProvider} from "../../providers/support/support";
 import _ from 'lodash';
 import {ToastProvider} from "../../providers/toast/toast";
 import {LoaderProvider} from "../../providers/loader/loader";
 import {AccountProvider} from "../../providers/account/account";
 import {Storage} from "@ionic/storage";
-import {HomePage} from "../home/home";
 import {UploadProfilePicturePage} from "../upload-profile-picture/upload-profile-picture";
+import {LandingPage} from "../landing/landing";
+import {HomePage} from "../home/home";
 
 @IonicPage()
 @Component({
@@ -20,6 +21,7 @@ export class LocationPage {
     isLoading = false;
     places = null;
     title = 'Add location';
+    isAd = false;
 
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
@@ -27,12 +29,19 @@ export class LocationPage {
                 public toast: ToastProvider,
                 public loader: LoaderProvider,
                 public accountProvider: AccountProvider,
-                public storage: Storage) {
-        this.title = this.navParams.get('title');
+                public storage: Storage,
+                public events: Events) {
+        if (this.navParams.get('title')) {
+            this.title = this.navParams.get('title');
+        }
+        if (this.navParams.get('isAd')) {
+            this.isAd = true;
+            this.title = 'Add a location to this item';
+        }
     }
 
     suggest(event) {
-        if (event.target.value && event.target.value.length > 3) {
+        if (event.target.value && event.target.value.length > 1) {
             this.isLoading = true;
             this.supportProvider.suggestLocations(event.target.value).then(res => {
                 if (_.has(res, 'error')) {
@@ -50,22 +59,36 @@ export class LocationPage {
     }
 
     saveLocation(place) {
-        let loader = this.loader.show('Saving...');
-        this.storage.set('location', place);
-        this.accountProvider.saveLocation(place).then(res => {
-            if (res['status'] == 'OK') {
-                this.storage.set('profile', res['user']);
-                this.toast.show('Your location has been successfully stored');
+        if (this.isAd) {
+            this.events.publish('location', place);
+            this.navCtrl.pop();
+        } else {
+            let loader = this.loader.show('Saving...');
+            this.storage.set('location', place);
+            this.accountProvider.saveLocation(place).then(res => {
+                if (res['status'] == 'OK') {
+                    this.storage.set('profile', res['user']);
+                    this.toast.show('Your location has been successfully stored');
 
-                if(res['user']['picture']){
-                    this.navCtrl.setRoot(UploadProfilePicturePage);
+                    if (res['user']['picture']) {
+                        this.navCtrl.setRoot(UploadProfilePicturePage);
+                    } else {
+                        this.navCtrl.setRoot(HomePage);
+                    }
                 } else {
-                    this.navCtrl.setRoot(HomePage);
+                    this.toast.show('An error occured. Please try again later');
                 }
-            } else {
-                this.toast.show('An error occured. Please try again later');
-            }
-            loader.dismiss();
+                loader.dismiss();
+            });
+        }
+    }
+
+    logout() {
+        this.storage.clear().then(() => {
+            this.navCtrl.setRoot(LandingPage);
+            this.toast.show('See you soon!')
+        }).then(() => {
+            this.storage.set('online', true);
         });
     }
 

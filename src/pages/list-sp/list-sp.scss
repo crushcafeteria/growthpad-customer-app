@@ -1,0 +1,34 @@
+page-list-sp {
+    .name {
+        display: block;
+        font-size: 16px;
+        color: #222;
+        margin: 0;
+        padding: 0;
+        margin-bottom: -4px;
+    }
+
+    .col {
+        padding: 0px !important;
+    }
+
+    .card-content-md {
+        padding: 8px 8px;
+        font-size: 1.4rem;
+        line-height: 1.5;
+    }
+
+    .pins {
+        column-count: 2;
+        column-gap: 0;
+    }
+
+    .pin {
+        break-inside: avoid;
+        margin-bottom: 20px;
+    }
+
+    ion-card-content ion-icon {
+        font-size: 10px !important;
+    }
+}

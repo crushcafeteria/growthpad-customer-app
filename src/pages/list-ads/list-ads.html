@@ -1,0 +1,142 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <ion-title>{{label}} near you</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="changeRadius()">
+                <ion-icon name="locate"></ion-icon> in {{radius}} kms
+            </button>
+            <!--<button ion-button icon-only (click)="reloadPage()" *ngIf="search">-->
+                <!--<ion-icon name="close-circle"></ion-icon>-->
+                <!--Reset-->
+            <!--</button>-->
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+
+    <!--Search parameters-->
+    <ion-row *ngIf="!eventOptions">
+        <ion-col col-12>
+            <ion-list>
+                <ion-item>
+                    <ion-label floating>1. What do you want to find?</ion-label>
+                    <ion-input type="text" [(ngModel)]="params.item"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label floating>2. Where is this item needed?</ion-label>
+                    <ion-input type="text" [(ngModel)]="params.locationQ" (keyup)="suggestLocation()"
+                               [readonly]="!params.item || params.item.length < 2"></ion-input>
+                </ion-item>
+            </ion-list>
+        </ion-col>
+
+        <ion-col col-12 *ngIf="places && step == 1">
+
+            <h4 text-muted text-center margin-top>Location Suggestions</h4>
+            <hr text-muted>
+
+            <ion-list>
+                <button ion-item *ngFor="let place of places" (click)="saveLocation(place)">
+                    <ion-avatar item-start>
+                        <img src="assets/icon/pin.png">
+                    </ion-avatar>
+                    <h2>{{place.display_name}}</h2>
+                    <p>{{place.lat}}, {{place.lon}}</p>
+                </button>
+            </ion-list>
+        </ion-col>
+
+    </ion-row>
+
+
+    <!--Loader-->
+    <ion-row *ngIf="isLoading">
+        <ion-col col-3></ion-col>
+        <ion-col col-6 text-center text-muted>
+            <img src="assets/images/loader.gif" alt="">
+            <h5>Loading...</h5>
+        </ion-col>
+    </ion-row>
+
+    <!--<ion-refresher (ionRefresh)="reloadPage($event)">-->
+    <!--<ion-refresher-content-->
+    <!--pullingText="Pull to refresh"-->
+    <!--refreshingText="Refreshing..."></ion-refresher-content>-->
+    <!--</ion-refresher>-->
+
+
+    <!--Search results header-->
+    <!--<ion-row *ngIf="search && !isLoading">-->
+    <!--<ion-col>-->
+    <!--<h5 text-center text-muted>-->
+    <!--Search results for '{{q}}'-->
+    <!--</h5>-->
+    <!--<hr text-muted>-->
+    <!--</ion-col>-->
+    <!--</ion-row>-->
+
+    <!--Ad listings-->
+    <ion-row *ngIf="step == 2">
+
+        <ion-col col-12 padding *ngIf="!eventOptions">
+            <h4 text-muted text-center margin-top>Search Results</h4>
+            <hr text-muted>
+        </ion-col>
+
+        <ion-col col-12 class="pins">
+            <div *ngFor="let ad of ads" class="pin">
+                <a href="#!" (click)="viewAd(ad)">
+                    <ion-card>
+                        <img [src]="ad.featured_picture"/>
+                        <ion-card-content>
+                            <div class="name ellipsize">{{ad.name}}</div>
+                            <small text-muted>Ksh {{ad.price | number}}</small>
+                            <br>
+                            <small text-muted icon-start>
+                                <ion-icon name="pin"></ion-icon>
+                                {{ad.location.display_name.split(',')[0]}}
+                            </small>
+                        </ion-card-content>
+                    </ion-card>
+                </a>
+            </div>
+        </ion-col>
+
+        <ion-col text-center text-muted *ngIf="!ads.length">
+            <h5></h5>
+            <div class="warning" text-center>
+                We could not find any products matching your search criteria. Please try again
+            </div>
+        </ion-col>
+    </ion-row>
+
+    <!--<ion-row *ngIf="!isLoading && !ads.length">-->
+    <!--<ion-col text-center text-muted>-->
+    <!--<ion-icon name="alert" style="font-size: 4em;"></ion-icon>-->
+    <!--<br>-->
+    <!--<h3>Nothing to display</h3>-->
+    <!--</ion-col>-->
+    <!--</ion-row>-->
+
+    <!--<ion-row>-->
+    <!--<ion-col col-12 text-center *ngIf="!hasMoreData">-->
+    <!--<br>-->
+    <!--<br>-->
+    <!--The End-->
+    <!--<br>-->
+    <!--<br>-->
+    <!--<br>-->
+    <!--</ion-col>-->
+    <!--</ion-row>-->
+
+    <!--<ion-infinite-scroll (ionInfinite)="loadMore($event)">-->
+    <!--<ion-infinite-scroll-content-->
+    <!--loadingSpinner="bubbles"-->
+    <!--loadingText="Getting some more..."-->
+    <!--*ngIf="hasMoreData">-->
+    <!--</ion-infinite-scroll-content>-->
+    <!--</ion-infinite-scroll>-->
+
+</ion-content>

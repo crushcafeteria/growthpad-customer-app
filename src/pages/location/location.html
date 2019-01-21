@@ -1,6 +1,12 @@
 <ion-header>
     <ion-navbar color="primary">
         <ion-title>{{title}}</ion-title>
+        <ion-buttons end>
+            <button ion-button (click)="logout()" icon-start *ngIf="step==3">
+                <ion-icon name="log-out"></ion-icon>
+                Logout
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 
@@ -14,7 +20,7 @@
         <ion-col></ion-col>
     </ion-row>
 
-    <ion-row>
+    <ion-row *ngIf="!isAd">
         <ion-col text-center>
             <h4>Where do you reside?</h4>
         </ion-col>
@@ -26,7 +32,7 @@
                 [(ngModel)]="q"
                 [showCancelButton]="true"
                 (ionInput)="suggest($event)"
-                debounce="500">
+                debounce="1000">
             </ion-searchbar>
         </ion-col>
     </ion-row>
@@ -48,7 +54,7 @@
                 </ion-list-header>
                 <button ion-item *ngFor="let place of places" (click)="saveLocation(place)">
                     <ion-avatar item-start>
-                        <img [src]="place.icon">
+                        <img src="assets/icon/pin.png">
                     </ion-avatar>
                     <h2>{{place.display_name}}</h2>
                     <p>{{place.lat}}, {{place.lon}}</p>
@@ -56,7 +62,6 @@
             </ion-list>
         </ion-col>
     </ion-row>
-
 
 
 </ion-content>

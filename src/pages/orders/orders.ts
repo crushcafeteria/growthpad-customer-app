@@ -3,6 +3,7 @@ import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {OrderProvider} from "../../providers/order/order";
 import {ViewOrderPage} from "../view-order/view-order";
 import {ToastProvider} from "../../providers/toast/toast";
+import {HomePage} from "../home/home";
 
 @IonicPage()
 @Component({
@@ -42,6 +43,10 @@ export class OrdersPage {
                 resolve(true);
             });
         });
+    }
+
+    goToHome() {
+        this.navCtrl.setRoot(HomePage);
     }
 
 }

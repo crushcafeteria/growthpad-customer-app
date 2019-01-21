@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {IonicPage, NavController} from 'ionic-angular';
+import {Events, IonicPage, MenuController, NavController} from 'ionic-angular';
 import {HomePage} from "../home/home";
 import {Storage} from "@ionic/storage";
 import {NetworkProvider} from "../../providers/network/network";
@@ -12,7 +12,6 @@ import {SignupPage} from "../signup/signup";
 import config from "../../config";
 import {InAppBrowser} from "@ionic-native/in-app-browser";
 import {LocationPage} from "../location/location";
-import {UploadProfilePicturePage} from "../upload-profile-picture/upload-profile-picture";
 
 @IonicPage()
 @Component({
@@ -31,12 +30,17 @@ export class LandingPage {
                 public accountProvider: AccountProvider,
                 public formBuilder: FormBuilder,
                 public toast: ToastProvider,
-                public iab: InAppBrowser) {
+                public iab: InAppBrowser,
+                public menuCtrl: MenuController,
+                public events: Events) {
 
         this.loginForm = this.formBuilder.group({
             email: '',
             password: ''
         });
+
+        // Disable sidemenu
+        this.menuCtrl.enable(false, 'sidemenu');
     }
 
     ionViewWillEnter() {
@@ -80,6 +84,9 @@ export class LandingPage {
                             }
                             loader.dismiss();
                             this.toast.show('Welcome, ' + res['user']['name']);
+                        }).then(() => {
+                            // Load profile app-wide
+                            this.events.publish('logged-in');
                         });
                     }
                 });

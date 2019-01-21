@@ -10,7 +10,7 @@ export class AlertProvider {
     }
 
 
-    message(message, title = 'Message', button: any ='OK') {
+    message(message, title = 'Message', button: any = 'OK') {
         let alert = this.alertCtrl.create({
             title: title,
             subTitle: message,
@@ -18,6 +18,22 @@ export class AlertProvider {
         });
 
         alert.present();
+    }
+
+    prompt(inputConfig, buttonConfig, title) {
+        let prompt = this.alertCtrl.create({
+            title: title,
+            inputs: [
+                {
+                    name: inputConfig.name,
+                    placeholder: inputConfig.placeholder,
+                    type: 'number'
+                },
+            ],
+            buttons: buttonConfig
+        });
+
+        prompt.present();
     }
 
 }

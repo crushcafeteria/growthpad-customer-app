@@ -3,76 +3,40 @@
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>Marketplace</ion-title>
-        <ion-buttons end>
-            <button ion-button icon-only (click)="showSearchOptions($event)">
-                <ion-icon name="search"></ion-icon>
-            </button>
-        </ion-buttons>
+        <ion-title>Welcome to Growthpad</ion-title>
     </ion-navbar>
 </ion-header>
 
 <ion-content padding>
 
-    <ion-refresher (ionRefresh)="reloadPage($event)">
-        <ion-refresher-content
-            pullingText="Pull to refresh"
-            refreshingText="Refreshing..."></ion-refresher-content>
-    </ion-refresher>
-
-    <!--Loader-->
-    <ion-row *ngIf="isLoading">
-        <ion-col col-3></ion-col>
-        <ion-col col-6 text-center text-muted>
-            <img src="assets/images/loader.gif" alt="">
-            <h5>Loading...</h5>
-        </ion-col>
-    </ion-row>
-
     <ion-row>
-        <ion-col class="pins">
-            <div *ngFor="let ad of ads" class="pin">
-                <a href="#!" (click)="viewAd(ad)">
-                    <ion-card>
-                        <img [src]="ad.featured_picture"/>
-                        <ion-card-content>
-                            <div class="name ellipsize">{{ad.name}}</div>
-                            <small text-muted>Ksh {{ad.price | number}}</small>
-                            <br>
-                            <small text-muted icon-start>
-                                <ion-icon name="pin"></ion-icon> {{ad.location}}
-                            </small>
-                        </ion-card-content>
-                    </ion-card>
-                </a>
-            </div>
+        <ion-col col-12>
+            <h4 text-center text-muted>What would you like to find?</h4>
         </ion-col>
-    </ion-row>
-
-    <ion-row>
-        <ion-col col-12 text-center *ngIf="!hasMoreData">
-            <br>
-            <br>
-            The End
-            <br>
-            <br>
-            <br>
+        <ion-col col-12>
+            <a href="#!" (click)="getListings('AGROVET', 'Agrovets')">
+                <ion-card>
+                    <img src="assets/images/agrovet.jpg"/>
+                    <div class="card-title">Agrovets</div>
+                </ion-card>
+            </a>
         </ion-col>
+        <ion-col col-12>
+            <a href="#!" (click)="getListings('CATERING', 'Caterers')">
+                <ion-card>
+                    <img src="assets/images/catering.jpg"/>
+                    <div class="card-title">Caterers</div>
+                </ion-card>
+            </a>
+        </ion-col>
+        <!--<ion-col col-12>-->
+            <!--<a href="#!" (click)="getListings('HOTELIER', 'Hoteliers')">-->
+                <!--<ion-card>-->
+                    <!--<img src="assets/images/hotelier.jpg"/>-->
+                    <!--<div class="card-title">Hoteliers</div>-->
+                <!--</ion-card>-->
+            <!--</a>-->
+        <!--</ion-col>-->
     </ion-row>
-
-    <!--Cart Button-->
-    <ion-fab bottom right>
-        <button ion-fab color="secondary" (click)="goToOrders()">
-            <ion-icon name="basket"></ion-icon>
-        </button>
-    </ion-fab>
-
-    <ion-infinite-scroll (ionInfinite)="loadMore($event)">
-        <ion-infinite-scroll-content
-            loadingSpinner="bubbles"
-            loadingText="Getting some more..."
-            *ngIf="hasMoreData">
-        </ion-infinite-scroll-content>
-    </ion-infinite-scroll>
 
 </ion-content>

@@ -3,7 +3,13 @@
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>My Orders</ion-title>
+        <ion-title>Placed Orders</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="goToHome()">
+                <ion-icon name="home"></ion-icon>
+                Home
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 

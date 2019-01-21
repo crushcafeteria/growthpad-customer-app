@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController} from 'ionic-angular';
-import {FormBuilder} from "@angular/forms";
+import {FormBuilder, Validators} from "@angular/forms";
 import {LandingPage} from "../landing/landing";
 import {InAppBrowser} from "@ionic-native/in-app-browser";
 import config from "../../config";
@@ -10,7 +10,6 @@ import {ToastProvider} from "../../providers/toast/toast";
 import {AccountProvider} from "../../providers/account/account";
 import {Storage} from "@ionic/storage";
 import _ from 'lodash';
-import {HomePage} from "../home/home";
 import {NetworkProvider} from "../../providers/network/network";
 
 @IonicPage()
@@ -33,12 +32,11 @@ export class SignupPage {
                 public storage: Storage,
                 public network: NetworkProvider) {
         this.signUpForm = this.formBuilder.group({
-            name: '',
-            email: '',
-            telephone: '',
-            gender: '',
-            county: '',
-            password: ''
+            name: [null, Validators.required],
+            email: [null, Validators.compose([Validators.required, Validators.email])],
+            telephone: [null, Validators.required],
+            gender: [null, Validators.required],
+            password: [null, Validators.required]
         });
     }
 
@@ -65,14 +63,11 @@ export class SignupPage {
                 this.accountProvider.signup(this.signUpForm.value).then(res => {
                     if (_.has(res, 'error')) {
                         this.toast.show(res['error']);
-                        loader.dismiss();
                     } else {
-                        this.storage.set('token', res['token']);
-                        this.storage.set('profile', res['user']);
-                        this.navCtrl.setRoot(HomePage);
-                        loader.dismiss();
-                        this.toast.show('Welcome, ' + res['user']['name'] + '!');
+                        this.toast.show('Account registered! Please login to proceed');
+                        this.navCtrl.setRoot(LandingPage);
                     }
+                    loader.dismiss();
                 });
             } else {
                 this.network.showRecovery(null);

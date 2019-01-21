@@ -1,0 +1,31 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <ion-title>Update this order</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+    <ion-row>
+        <ion-col col-12>
+            <ion-item no-padding>
+                <ion-label>Order Status</ion-label>
+                <ion-select [(ngModel)]="order.status">
+                    <ion-option value="PENDING">Pending</ion-option>
+                    <ion-option value="PROGRESSING">In Progress</ion-option>
+                    <ion-option value="DELIVERED">Delivered</ion-option>
+                </ion-select>
+            </ion-item>
+        </ion-col>
+
+        <ion-col col-12>
+            <ion-label text-muted>Order Instructions</ion-label>
+            <textarea [(ngModel)]="order.instructions"></textarea>
+        </ion-col>
+
+        <button ion-button color="secondary" block (click)="updateOrder()">
+            Update this order
+        </button>
+    </ion-row>
+
+</ion-content>

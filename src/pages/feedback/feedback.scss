@@ -1,0 +1,25 @@
+page-feedback {
+    //#myInput {
+    //    width: calc(100% - 10px);
+    //    border: 0;
+    //    border-radius: 0;
+    //    background: transparent;
+    //}
+
+    label {
+        color: #999;
+        font-size: 2rem;
+    }
+
+    textarea {
+        width: 100%;
+        border: 0;
+        border-bottom: 1px solid #ddd;
+        background-color: transparent;
+        font-size: 2rem;
+        padding: 17px;
+        overflow: hidden;
+    }
+
+
+}

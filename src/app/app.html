@@ -1,4 +1,4 @@
-<ion-menu [content]="content">
+<ion-menu [content]="content" id="sidemenu">
     <ion-header>
         <ion-toolbar color="primary">
             <ion-title>{{config.app.name}}</ion-title>
@@ -6,26 +6,20 @@
     </ion-header>
 
     <ion-content>
-        <ion-row>
-            <ion-col>
-                <ion-card>
-                    <img [src]="user.picture" *ngIf="user"/>
-                    <img src="assets/images/avatar.png" *ngIf="!user"/>
-
-                    <ion-card-content>
-                        <ion-fab right top>
-                            <button ion-fab small>
-                                <ion-icon name="contact"></ion-icon>
-                            </button>
-                        </ion-fab>
-                    </ion-card-content>
-                </ion-card>
+        <ion-row padding-top padding-left *ngIf="user">
+            <ion-col col-3 padding-top>
+                <img [src]="user.picture" *ngIf="user?.picture"/>
+                <img src="assets/images/avatar.png" *ngIf="!user?.picture"/>
+            </ion-col>
+            <ion-col col-9 padding style="margin-top: 18px;">
+                <h4 no-margin>{{user?.name}}</h4>
             </ion-col>
         </ion-row>
 
         <ion-list>
             <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)" icon-left>
-                <ion-icon [name]="p.icon"></ion-icon> {{p.title}}
+                <ion-icon [name]="p.icon"></ion-icon>
+                {{p.title}}
             </button>
         </ion-list>
 

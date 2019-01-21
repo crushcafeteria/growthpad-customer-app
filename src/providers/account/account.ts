@@ -90,4 +90,32 @@ export class AccountProvider {
         );
     }
 
+    getNearbySPs(category, radius, page = 1) {
+        return new Promise(resolve => {
+            this.storage.get('token').then(token => {
+                this.http.get(config.url + 'sp/fetch?category=' + category + '&radius=' + radius + '&page=' + page, {
+                    headers: new Authorization().attachToken(token.value)
+                })
+                    .subscribe(data => {
+                        resolve(data);
+                    });
+            });
+        });
+    }
+
+    sendMessage(payload) {
+        return new Promise(resolve => {
+                this.http.post(config.url + 'feedback', {
+                    names: payload.names,
+                    telephone: payload.telephone,
+                    email: payload.email,
+                    message: payload.message
+                })
+                    .subscribe(data => {
+                        resolve(data);
+                    });
+            }
+        );
+    }
+
 }

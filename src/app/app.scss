@@ -25,3 +25,44 @@ a, a:hover{
 [text-muted] {
     color: grey;
 }
+
+
+// Message boxes
+.info, .success, .warning, .error, .validation {
+    border: 1px solid;
+    margin: 0 10px 10px 10px;
+    padding: 10px;
+    background-repeat: no-repeat;
+    background-position: 10px center;
+}
+.info {
+    color: #fff;
+    background-color: #488aff;
+}
+.success {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+}
+.warning {
+    color: #9F6000;
+    background-color: #FEEFB3;
+}
+.error{
+    color: #D8000C;
+    background-color: #FFBABA;
+}
+.validation{
+    color: #D63301;
+    background-color: #FFCCBA;
+}
+
+// Form error hints
+[form-error] {
+    margin-left: 15px;
+    color: red;
+}
+
+// Card layouts
+.card-md {
+    margin: 0px 10px !important;
+}

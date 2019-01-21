@@ -1,35 +1,24 @@
 page-home {
 
-    .name {
-        display: block;
-        font-size: 16px;
-        color: #222;
-        margin: 0;
-        padding: 0;
-        margin-bottom: -4px;
+    ion-card {
+        position: relative;
+        text-align: center;
     }
 
-    .col {
-        padding: 0px !important;
+    .card-title {
+        position: absolute;
+        top: 40%;
+        font-size: 2.0em;
+        width: 100%;
+        font-weight: bold;
+        color: #fff;
     }
 
-    .card-content-md {
-        padding: 8px 8px;
-        font-size: 1.4rem;
-        line-height: 1.5;
-    }
-
-    .pins {
-        column-count: 2;
-        column-gap: 0;
-    }
-
-    .pin {
-        break-inside: avoid;
-        margin-bottom: 20px;
-    }
-
-    ion-card-content ion-icon {
-        font-size: 10px !important;
+    .card-subtitle {
+        font-size: 1.0em;
+        position: absolute;
+        top: 60%;
+        width: 100%;
+        color: #fff;
     }
 }

@@ -100,13 +100,15 @@ export class ProfilePage {
     public takePicture(sourceType) {
         // Create options for the Camera Dialog
         var options: CameraOptions = {
-            quality: 100,
+            quality: 60,
             sourceType: sourceType,
             saveToPhotoAlbum: false,
             correctOrientation: true,
             mediaType: this.camera.MediaType.PICTURE,
             destinationType: this.camera.DestinationType.DATA_URL,
-            allowEdit: false,
+            allowEdit: true,
+            targetWidth: 600,
+            targetHeight: 600
         };
 
         // Get the data of an image
@@ -202,7 +204,7 @@ export class ProfilePage {
         this.navCtrl.push(EditProfilePage);
     }
 
-    changeLocation(){
+    changeLocation() {
         this.navCtrl.push(LocationPage, {
             next: ProfilePage,
             title: 'Change location'

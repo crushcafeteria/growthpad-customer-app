@@ -1,14 +1,7 @@
 <ion-header>
-
-  <ion-navbar color="primary">
-    <ion-title>Create an order</ion-title>
-      <ion-buttons end>
-          <button ion-button icon-only (click)="closeModal($event)">
-              <ion-icon name="close"></ion-icon>
-          </button>
-      </ion-buttons>
-  </ion-navbar>
-
+    <ion-navbar color="primary">
+        <ion-title>Review your order</ion-title>
+    </ion-navbar>
 </ion-header>
 
 
@@ -25,16 +18,75 @@
     </ion-row>
 
     <ion-row>
+        <!--Product/service information-->
         <ion-col col-12 text-center>
-            <h4>You are about to order {{ad.name}}</h4>
+            <h3>You are ordering {{ad.name}}</h3>
+            <p>
+                {{ad.description}}
+            </p>
         </ion-col>
+
+        <!--Delivery location-->
         <ion-col col-12>
+            <ion-card>
+                <ion-card-header text-center>
+                    Delivery Location
+                </ion-card-header>
+                <ion-list no-border>
+                    <img
+                        src="https://www.mapquestapi.com/staticmap/v5/map?key={{config.mapquest_key}}&locations={{user?.location.display_name}}&zoom=14&size=400,300">
+                    <ion-item>
+                        <ion-icon name="pin" item-start large></ion-icon>
+                        <h2>{{user?.location.display_name}}</h2>
+                        <p>{{user?.location.lat}}, {{user?.location.lon}}</p>
+                    </ion-item>
+                </ion-list>
+            </ion-card>
+        </ion-col>
+        <ion-col col-12 margin-bottom text-center>
+            <button ion-button color="dark" icon-start small (click)="changeLocation()" outline padding-left padding-right>
+                Change Location
+            </button>
+        </ion-col>
+
+        <!--Catering options-->
+        <ion-col col-12 margin-bottom *ngIf="ad.category == 'CATERING'">
+            <ion-card>
+                <ion-card-header text-center>
+                    Your catering options
+                </ion-card-header>
+                <ion-list>
+                    <ion-item>
+                        <ion-icon name="keypad" item-start></ion-icon>
+                        Planning a {{config.catering.event_types[eventOptions.type]}}
+                    </ion-item>
+                    <ion-item>
+                        <ion-icon name="home" item-start></ion-icon>
+                        Will be an {{config.catering.venues[eventOptions.venue]}}
+                    </ion-item>
+                    <ion-item>
+                        <ion-icon name="contact" item-start></ion-icon>
+                        {{eventOptions.attendees}} people might attend
+                    </ion-item>
+                    <ion-item>
+                        <ion-icon name="pin" item-start></ion-icon>
+                        Held @ {{eventOptions.location.display_name}}
+                    </ion-item>
+                </ion-list>
+            </ion-card>
+        </ion-col>
+
+        <!--Extra order instructions-->
+        <ion-col col-12 margin-bottom>
             <p text-muted>Type additional instructions about your order in the box below</p>
-            <textarea placeholder="Optional..." style="width: 100%; height: 100px;" [(ngModel)]="instructions" padding></textarea>
+            <textarea placeholder="Optional..." style="width: 100%; height: 100px;" [(ngModel)]="instructions"
+                      padding></textarea>
         </ion-col>
-        <ion-col col-12>
+
+        <ion-col col-12 padding>
             <button ion-button color="secondary" icon-start block (click)="createOrder()">
-                <ion-icon name="checkmark-circle"></ion-icon> Create this order
+                <ion-icon name="checkmark-circle"></ion-icon>
+                Order this item
             </button>
         </ion-col>
     </ion-row>

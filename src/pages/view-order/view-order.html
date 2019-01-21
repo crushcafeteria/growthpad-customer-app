@@ -17,7 +17,7 @@
         </ion-col>
     </ion-row>
 
-    <ion-row>
+    <ion-row margin-bottom>
         <ion-col col-12>
             <h3 margin-top>{{order.ad.name}}</h3>
             <h5>Ksh {{order.ad.price | number}}</h5>
@@ -35,96 +35,82 @@
     </ion-row>
 
     <!--Supplier info-->
-    <ion-card no-padding>
-        <ion-card-header>
-            SUPPLIER DETAILS
-        </ion-card-header>
-        <ion-card-content>
-            <ion-list>
-                <ion-item no-padding>
-                    <ion-avatar item-start>
-                        <img [src]="order.ad.publisher.picture">
-                    </ion-avatar>
-                    <p>Your supplier</p>
-                    <h2>{{order.ad.publisher.name}}</h2>
-                </ion-item>
-                <ion-item no-padding>
-                    <ion-icon name="call" item-start></ion-icon>
-                    <p>Mobile Number</p>
-                    <h2>
-                        <a href="tel:{{order.ad.publisher.telephone}}">
-                            {{order.ad.publisher.telephone}}
-                        </a>
-                    </h2>
-                </ion-item>
-                <ion-item no-padding *ngIf="order.ad.publisher.email">
-                    <ion-icon name="mail" item-start></ion-icon>
-                    <p>Email</p>
-                    <h2>
-                        <a href="mailto:#">
-                            {{order.ad.publisher.email}}
-                        </a>
-                    </h2>
-                </ion-item>
-                <ion-item no-padding *ngIf="order.ad.publisher.location">
-                    <ion-icon name="pin" item-start></ion-icon>
-                    <p>Location</p>
-                    <h2>
-                        {{order.ad.publisher.location.display_name}}
-                    </h2>
-                </ion-item>
-                <ion-item no-padding>
-                    <ion-icon name="pin" item-start></ion-icon>
-                    <p>Order Date</p>
-                    <h2>
-                        {{order.created_at}}
-                    </h2>
-                </ion-item>
-            </ion-list>
-        </ion-card-content>
-    </ion-card>
+    <ion-row margin-bottom>
+        <ion-card no-padding>
+            <ion-card-header>
+                SUPPLIER DETAILS
+            </ion-card-header>
+            <ion-card-content>
+                <ion-list>
+                    <ion-item no-padding>
+                        <ion-avatar item-start>
+                            <img [src]="order.ad.publisher.picture" *ngIf="order.ad.publisher.picture">
+                            <img src="assets/images/avatar.png" *ngIf="!order.ad.publisher.picture">
+                        </ion-avatar>
+                        <p>Your supplier</p>
+                        <h2>{{order.ad.publisher.name}}</h2>
+                    </ion-item>
+                    <ion-item no-padding *ngIf="order.ad.publisher.location">
+                        <ion-icon name="pin" item-start></ion-icon>
+                        <p>Location</p>
+                        <h2>
+                            {{order.ad.publisher.location.display_name}}
+                        </h2>
+                    </ion-item>
+                </ion-list>
+            </ion-card-content>
+        </ion-card>
+    </ion-row>
 
     <!--Order info-->
-    <ion-card no-padding margin-top>
-        <ion-card-header>
-            ORDER DETAILS
-        </ion-card-header>
-        <ion-card-content>
-            <ion-list>
-                <ion-item no-padding>
-                    <ion-avatar item-start>
-                        <img [src]="order.ad.publisher.picture">
-                    </ion-avatar>
-                    <p>Your supplier</p>
-                    <h2>{{order.ad.publisher.name}}</h2>
-                </ion-item>
-                <ion-item no-padding>
-                    <ion-icon name="call" item-start></ion-icon>
-                    <p>Mobile Number</p>
-                    <h2>
-                        <a href="tel:{{order.ad.publisher.telephone}}">
-                            {{order.ad.publisher.telephone}}
-                        </a>
-                    </h2>
-                </ion-item>
-                <ion-item no-padding *ngIf="order.ad.publisher.email">
-                    <ion-icon name="mail" item-start></ion-icon>
-                    <p>Email</p>
-                    <h2>
-                        <a href="mailto:#">
-                            {{order.ad.publisher.email}}
-                        </a>
-                    </h2>
-                </ion-item>
-                <ion-item no-padding *ngIf="order.ad.publisher.email">
-                    <ion-icon name="pin" item-start></ion-icon>
-                    <p>Location</p>
-                    <h2>
-                        {{order.ad.publisher.location.display_name}}
-                    </h2>
-                </ion-item>
-            </ion-list>
-        </ion-card-content>
-    </ion-card>
+    <ion-row margin-bottom>
+        <ion-card no-padding margin-top margin-bottom>
+            <ion-card-header>
+                ORDER DETAILS
+            </ion-card-header>
+            <ion-card-content>
+                <ion-list>
+                    <ion-item no-padding>
+                        <ion-icon name="time" item-start></ion-icon>
+                        <p>Status</p>
+                        <h2>
+                            {{order.status}}
+                        </h2>
+                    </ion-item>
+                    <ion-item no-padding>
+                        <ion-icon name="calendar" item-start></ion-icon>
+                        <p>Order Date</p>
+                        <h2>
+                            {{order.created_at}}
+                        </h2>
+                    </ion-item>
+                </ion-list>
+            </ion-card-content>
+        </ion-card>
+    </ion-row>
+
+    <!--Order instructions-->
+    <ion-row *ngIf="order.instructions">
+        <ion-card no-padding margin-top>
+            <ion-card-header>
+                ORDER INSTRUCTIONS
+            </ion-card-header>
+            <ion-card-content>
+                <p>{{order.instructions}}</p>
+            </ion-card-content>
+        </ion-card>
+    </ion-row>
+
+    <ion-row>
+        <ion-col text-center>
+            <button ion-button color="danger" icon-left block (click)="showCancelPrompt()" [disabled]="order.status != 'PENDING'">
+                <ion-icon name="trash"></ion-icon>
+                Cancel this order
+            </button>
+            <small text-muted *ngIf="order.status == 'PROGRESSING'">
+                You cannot cancel this order because it is being processed
+            </small>
+        </ion-col>
+    </ion-row>
 
 </ion-content>
