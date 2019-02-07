@@ -76,3 +76,8 @@ configurations.all {
     }
 }
 ```
+
+### 2. OTA updates sometimes successfully apply then revert on app restart
+To resolve this issue, read the following Github issues:-
+https://github.com/Microsoft/cordova-plugin-code-push/issues/451
+

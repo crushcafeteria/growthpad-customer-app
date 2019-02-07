@@ -12,7 +12,7 @@ export const config = {
         F: 'Female'
     },
 
-    default_radius: 60, // in kilometres
+    default_radius: 20, // in kilometres
 
     catering: {
         event_types: {

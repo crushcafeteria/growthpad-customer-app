@@ -145,7 +145,8 @@ export class ListAdsPage {
     viewAd(ad) {
         this.navCtrl.push(ViewAdPage, {
             ad: ad,
-            eventOptions: this.eventOptions
+            eventOptions: this.eventOptions,
+            deliveryLocation: this.params.location
         });
     }
 
@@ -222,7 +223,7 @@ export class ListAdsPage {
 
         alert.addButton('Cancel');
         alert.addButton({
-            text: 'Search nearby',
+            text: 'Save Radius',
             handler: radius => {
                 this.radius = radius;
                 this.toast.show('Search radius set to ' + this.radius + ' kilometres');

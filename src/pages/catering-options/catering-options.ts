@@ -12,18 +12,16 @@ import {ListAdsPage} from "../list-ads/list-ads";
 })
 export class CateringOptionsPage {
 
-    public Xevent: any =  {
-        type: 'WEDDING',
-        attendees: 10,
-        venue: 'OUTDOOR',
-        location: null
-    }
+    xtype: null
+    xattendees: null
+    xvenue: null
+    xlocation: null
 
-    public locationQ;
+    public locationQ = '';
     public places
     public isLoading = false;
     public formReady = false;
-    public btnDisabled = true;
+    public btnHidden = true;
 
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
@@ -32,10 +30,8 @@ export class CateringOptionsPage {
     }
 
     suggestLocation() {
-        this.Xevent.location = null;
-        this.validate();
-
-        if(this.locationQ.length > 2){
+        this.xlocation = null;
+        if (this.locationQ.length > 2) {
             this.isLoading = true;
             this.supportProvider.suggestLocations(this.locationQ).then(res => {
                 if (_.has(res, 'error')) {
@@ -50,30 +46,61 @@ export class CateringOptionsPage {
     }
 
     saveLocation(place) {
-        this.Xevent.location = place;
+        this.xlocation = place;
         this.locationQ = place.display_name;
         this.places = null;
-        this.validate();
+        this.validate()
     }
 
     saveForm() {
         this.navCtrl.push(ListAdsPage, {
-            eventOptions: this.Xevent,
+            eventOptions: this.makeEventOptions(),
             category: 'CATERING',
             label: 'Caterers',
         });
     }
 
+    private makeEventOptions() {
+        return {
+            type: this.xtype,
+            attendees: this.xattendees,
+            venue: this.xvenue,
+            location: this.xlocation,
+        }
+    }
+
     validate() {
-        if (!this.Xevent.type || !this.Xevent.attendees || !this.Xevent.venue || !this.Xevent.location || !this.locationQ) {
-            this.btnDisabled = true;
-            this.formReady = false;
-        } else {
-            this.btnDisabled = false;
-            this.formReady = true;
+        console.log(this.makeEventOptions(), this.locationQ)
+        let hasError = false;
+        let errors = new Array();
+        if (!this.xtype) {
+            hasError = true
+            errors.push('Please choose an event type')
         }
 
-        console.log(this.Xevent, this.locationQ);
+        if (!this.xattendees) {
+            hasError = true
+            errors.push('Please enter expected attendees')
+        }
+
+        if (!this.xvenue) {
+            hasError = true
+            errors.push('Please choose a venue type')
+        }
+
+        if (!this.xlocation) {
+            hasError = true
+            errors.push('Please add your location')
+        }
+
+        if (hasError) {
+            this.btnHidden = true;
+            this.formReady = false;
+            this.toast.show(errors.join('\n* '))
+        } else {
+            this.btnHidden = false;
+            this.formReady = true;
+        }
     }
 
 }

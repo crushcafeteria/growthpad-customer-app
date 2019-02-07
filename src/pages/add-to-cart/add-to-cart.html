@@ -27,23 +27,23 @@
         </ion-col>
 
         <!--Delivery location-->
-        <ion-col col-12>
+        <ion-col col-12 *ngIf="ad.category == 'AGROVET'">
             <ion-card>
                 <ion-card-header text-center>
                     Delivery Location
                 </ion-card-header>
                 <ion-list no-border>
                     <img
-                        src="https://www.mapquestapi.com/staticmap/v5/map?key={{config.mapquest_key}}&locations={{user?.location.display_name}}&zoom=14&size=400,300">
+                        src="https://www.mapquestapi.com/staticmap/v5/map?key={{config.mapquest_key}}&locations={{deliveryLocation.coordinates.lon}},{{deliveryLocation.coordinates.lat}}&zoom=12&size=400,300">
                     <ion-item>
                         <ion-icon name="pin" item-start large></ion-icon>
-                        <h2>{{user?.location.display_name}}</h2>
-                        <p>{{user?.location.lat}}, {{user?.location.lon}}</p>
+                        <h2>{{deliveryLocation.name}}</h2>
+                        <p>{{deliveryLocation.coordinates.lon}}, {{deliveryLocation.coordinates.lat}}</p>
                     </ion-item>
                 </ion-list>
             </ion-card>
         </ion-col>
-        <ion-col col-12 margin-bottom text-center>
+        <ion-col col-12 margin-bottom text-center *ngIf="ad.category == 'AGROVET'">
             <button ion-button color="dark" icon-start small (click)="changeLocation()" outline padding-left padding-right>
                 Change Location
             </button>
@@ -70,7 +70,7 @@
                     </ion-item>
                     <ion-item>
                         <ion-icon name="pin" item-start></ion-icon>
-                        Held @ {{eventOptions.location.display_name}}
+                        Held @ {{eventOptions.location.name}}
                     </ion-item>
                 </ion-list>
             </ion-card>

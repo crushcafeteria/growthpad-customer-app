@@ -14,12 +14,11 @@
                 the caterer you choose gets this information
             </div>
 
-
             <!--Event info-->
             <ion-list>
                 <ion-item>
                     <ion-label>Event Type</ion-label>
-                    <ion-select placeholder="Choose" [ngModel]="Xevent?.type" (change)="validate()">
+                    <ion-select placeholder="Choose" [(ngModel)]="xtype">
                         <ion-option value="WEDDING">Wedding</ion-option>
                         <ion-option value="FUNERAL">Funeral</ion-option>
                         <ion-option value="GRADUATION">Graduation Party</ion-option>
@@ -30,11 +29,11 @@
                 </ion-item>
                 <ion-item>
                     <ion-label fixed>Attendees</ion-label>
-                    <ion-input type="number" placeholder="Number of attendees" text-right [ngModel]="Xevent?.attendees" (keyup)="validate()"></ion-input>
+                    <ion-input type="number" placeholder="Number of attendees" text-right [(ngModel)]="xattendees"></ion-input>
                 </ion-item>
                 <ion-item>
                     <ion-label>Venue</ion-label>
-                    <ion-select placeholder="Choose" [ngModel]="Xevent?.venue" (change)="validate()">
+                    <ion-select placeholder="Choose" [(ngModel)]="xvenue">
                         <ion-option value="INDOOR">Indoor Venue</ion-option>
                         <ion-option value="OUTDOOR">Outdoor Venue</ion-option>
                     </ion-select>
@@ -44,7 +43,6 @@
                     <ion-input type="text" placeholder="Type something" text-right [(ngModel)]="locationQ" (keyup)="suggestLocation()"></ion-input>
                 </ion-item>
             </ion-list>
-
 
 
         </ion-col>
@@ -58,21 +56,22 @@
             </ion-col>
         </ion-row>
 
-        <!--Location suggestions-->
-        <ion-col col-12 *ngIf="places">
-            <ion-list>
-                <button ion-item *ngFor="let place of places" (click)="saveLocation(place)">
-                    <ion-avatar item-start>
-                        <img src="assets/icon/pin.png">
-                    </ion-avatar>
-                    <h2>{{place.display_name}}</h2>
-                    <p>{{place.lat}}, {{place.lon}}</p>
-                </button>
-            </ion-list>
-        </ion-col>
-
-        <button ion-button color="secondary" icon-left [disabled]="btnDisabled" (click)="saveForm()" block>
-            <ion-icon name="checkmark-circle"></ion-icon> Continue
+        <!--Location-->
+        <ion-row>
+            <ion-col col-12 *ngIf="places">
+                <ion-list>
+                    <button ion-item *ngFor="let place of places" (click)="saveLocation(place)">
+                        <ion-avatar item-start>
+                            <img src="assets/icon/pin.png">
+                        </ion-avatar>
+                        <h2>{{place.name}}</h2>
+                        <p>{{place.coordinates.lat}}, {{place.coordinates.lon}}</p>
+                    </button>
+                </ion-list>
+            </ion-col>
+        </ion-row>
+        <button ion-button color="secondary" icon-left [hidden]="btnHidden" (click)="saveForm()" block>
+            <ion-icon name="checkmark-circle"></ion-icon> Find Caterers
         </button>
 
     </ion-row>

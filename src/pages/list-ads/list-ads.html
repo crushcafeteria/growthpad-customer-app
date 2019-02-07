@@ -21,11 +21,11 @@
         <ion-col col-12>
             <ion-list>
                 <ion-item>
-                    <ion-label floating>1. What do you want to find?</ion-label>
+                    <ion-label floating>1. Enter a product name</ion-label>
                     <ion-input type="text" [(ngModel)]="params.item"></ion-input>
                 </ion-item>
                 <ion-item>
-                    <ion-label floating>2. Where is this item needed?</ion-label>
+                    <ion-label floating>2. Enter a delivery location</ion-label>
                     <ion-input type="text" [(ngModel)]="params.locationQ" (keyup)="suggestLocation()"
                                [readonly]="!params.item || params.item.length < 2"></ion-input>
                 </ion-item>
@@ -42,8 +42,8 @@
                     <ion-avatar item-start>
                         <img src="assets/icon/pin.png">
                     </ion-avatar>
-                    <h2>{{place.display_name}}</h2>
-                    <p>{{place.lat}}, {{place.lon}}</p>
+                    <h2>{{place.name}}</h2>
+                    <p>{{place.coordinates.lat}}, {{place.coordinates.lon}}</p>
                 </button>
             </ion-list>
         </ion-col>

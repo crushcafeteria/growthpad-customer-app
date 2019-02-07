@@ -21,6 +21,7 @@ export class AddToCartPage {
     user;
     config;
     eventOptions = null;
+    deliveryLocation = null;
 
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
@@ -31,6 +32,7 @@ export class AddToCartPage {
                 public storage: Storage) {
         this.ad = navParams.get('ad');
         this.eventOptions = navParams.get('eventOptions');
+        this.deliveryLocation = navParams.get('deliveryLocation');
 
         this.storage.get('profile').then(profile => {
             this.user = profile;
@@ -48,7 +50,7 @@ export class AddToCartPage {
     createOrder() {
         let loader = this.loader.show('Ordering...');
 
-        this.orderProvider.createOrder(this.ad, this.instructions, this.eventOptions).then(res => {
+        this.orderProvider.createOrder(this.ad, this.instructions, this.eventOptions, this.deliveryLocation).then(res => {
             if (res['status'] == 'OK') {
                 this.toast.show('Your order has been received!', 6000);
                 this.navCtrl.setRoot(OrdersPage);

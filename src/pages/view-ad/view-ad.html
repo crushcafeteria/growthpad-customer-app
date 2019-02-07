@@ -70,15 +70,13 @@
                 Posted under {{ad.category}}
             </small>
         </ion-col>
+
+        <ion-col col-12 padding-top>
+            <button ion-button icon-start color="secondary" solid (click)="addToCart(ad)" block>
+                <ion-icon name="cart"></ion-icon>
+                {{(ad.category == 'CATERING') ? 'Request this service' : 'Order this item'}}
+            </button>
+        </ion-col>
     </ion-row>
 
 </ion-content>
-
-<ion-footer no-border>
-    <ion-toolbar color="light" padding-left padding-right>
-        <button ion-button icon-start color="secondary" solid (click)="addToCart(ad)" block>
-            <ion-icon name="cart"></ion-icon>
-            {{(ad.category == 'CATERING') ? 'Request this service' : 'Order this item'}}
-        </button>
-    </ion-toolbar>
-</ion-footer>

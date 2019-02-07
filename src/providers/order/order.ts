@@ -11,13 +11,14 @@ export class OrderProvider {
                 public storage: Storage) {
     }
 
-    createOrder(ad, instructions = null, eventOptions = null) {
+    createOrder(ad, instructions = null, eventOptions = null, deliveryLocation = null) {
         return new Promise(resolve => {
             this.storage.get('token').then(token => {
                 this.http.post(config.url + 'orders', {
                     ad_id: ad.id,
                     instructions: instructions,
-                    eventOptions: eventOptions
+                    eventOptions: eventOptions,
+                    deliveryLocation: deliveryLocation
                 }, {
                     headers: new Authorization().attachToken(token.value)
                 }).subscribe(res => {

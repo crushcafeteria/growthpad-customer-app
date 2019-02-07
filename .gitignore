@@ -33,3 +33,5 @@ $RECYCLE.BIN/
 .DS_Store
 Thumbs.db
 UserInterfaceState.xcuserstate
+customer.growthpad.signed.apk
+app-release-unsigned.apk
