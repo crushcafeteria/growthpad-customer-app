@@ -27,9 +27,12 @@
                         <ion-option value="CORPORATE">Corporate Event</ion-option>
                     </ion-select>
                 </ion-item>
-                <ion-item>
-                    <ion-label fixed>Attendees</ion-label>
-                    <ion-input type="number" placeholder="Number of attendees" text-right [(ngModel)]="xattendees"></ion-input>
+                <ion-item text-left>
+                    <ion-label fixed class="fix" text-muted>{{xattendees}} People Expected</ion-label>
+                    <ion-range min="0" max="500" color="primary" pin="true" [(ngModel)]="xattendees">
+                        <ion-label slot="start">-200</ion-label>
+                        <ion-label slot="end">200</ion-label>
+                    </ion-range>
                 </ion-item>
                 <ion-item>
                     <ion-label>Venue</ion-label>
@@ -40,7 +43,7 @@
                 </ion-item>
                 <ion-item>
                     <ion-label fixed>Location</ion-label>
-                    <ion-input type="text" placeholder="Type something" text-right [(ngModel)]="locationQ" (keyup)="suggestLocation()"></ion-input>
+                    <ion-input type="text" placeholder="Location" text-right [(ngModel)]="locationQ" (keyup)="suggestLocation()"></ion-input>
                 </ion-item>
             </ion-list>
 

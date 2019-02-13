@@ -6,32 +6,43 @@
 
 <ion-content padding>
 
-    <ion-list>
-        <ion-item>
-            <ion-label floating>Full Names</ion-label>
-            <ion-input type="text" [ngModel]="user?.name" (ngModelChange)="user.name=$event"></ion-input>
-        </ion-item>
-        <ion-item margin-top margin-bottom>
-            <ion-label>Gender</ion-label>
-            <ion-select [ngModel]="user?.gender" (ngModelChange)="user.gender=$event">
-                <ion-option value="M">Male</ion-option>
-                <ion-option value="F">Female</ion-option>
-            </ion-select>
-        </ion-item>
-        <ion-item>
-            <ion-label floating>Email Address</ion-label>
-            <ion-input type="email" [ngModel]="user?.email" (ngModelChange)="user.email=$event"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label floating>Telephone</ion-label>
-            <ion-input type="number" [ngModel]="user?.telephone" (ngModelChange)="user.telephone=$event"></ion-input>
-        </ion-item>
-        <ion-item>
+    <ion-row>
+        <ion-col col-12>
+            <ion-list>
+                <ion-item>
+                    <ion-label floating>Full Names</ion-label>
+                    <ion-input type="text" [ngModel]="user?.name" (ngModelChange)="user.name=$event"></ion-input>
+                </ion-item>
+                <ion-item margin-top margin-bottom>
+                    <ion-label>Gender</ion-label>
+                    <ion-select [ngModel]="user?.gender" (ngModelChange)="user.gender=$event">
+                        <ion-option value="M">Male</ion-option>
+                        <ion-option value="F">Female</ion-option>
+                    </ion-select>
+                </ion-item>
+                <ion-item>
+                    <ion-label floating>Email Address</ion-label>
+                    <ion-input type="email" [ngModel]="user?.email" (ngModelChange)="user.email=$event"></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label floating>Telephone</ion-label>
+                    <ion-input type="number" [ngModel]="user?.telephone"
+                               (ngModelChange)="user.telephone=$event"></ion-input>
+                </ion-item>
+            </ion-list>
+        </ion-col>
+        <ion-col>
             <button ion-button color="secondary" icon-start block (click)="updateProfile()">
                 <ion-icon name="checkmark-circle"></ion-icon>
-                Update Profile
+                Save
             </button>
-        </ion-item>
-    </ion-list>
+        </ion-col>
+        <ion-col col-12 text-center margin-top>
+            <button ion-button icon-start small (click)="changePassword()">
+                <ion-icon name="key"></ion-icon>
+                Change Password
+            </button>
+        </ion-col>
+    </ion-row>
 
 </ion-content>

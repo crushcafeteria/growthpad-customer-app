@@ -43,10 +43,17 @@ A new file `customer.growthpad.signed.apk` will be placed in the project root. Y
 file to the Google Play Store
 
 
-# Releasing OTA updates
-To release an update on the **Production** channel, run this command:-
+# Releasing OTA (Over The Air) updates
+All OTA updates will be released on the **Production** channel and will target all binary versions.
+
+To release an customer update, run this command:-
 ```
-appcenter codepush release-cordova -a growthpad/Growthpad-Customer-App -d Production --description "[DEPLOYMENT DESCRIPTION]" -m
+appcenter codepush release-cordova -a growthpad/Growthpad-Customer-App -d Production --description "[DEPLOYMENT DESCRIPTION]" -m -t *
+```
+
+To release a service provider update, run this command:-
+```
+appcenter codepush release-cordova -a growthpad/Growthpad-Service-Provider-App -d Production --description "[DEPLOYMENT DESCRIPTION]" -m -t *
 ```
 
 # Log of possible bugs

@@ -55,7 +55,7 @@ export class AddToCartPage {
                 this.toast.show('Your order has been received!', 6000);
                 this.navCtrl.setRoot(OrdersPage);
             } else {
-                this.toast.show('An error occured while processing your order');
+                this.toast.show(res['error']);
             }
             loader.dismiss();
         });

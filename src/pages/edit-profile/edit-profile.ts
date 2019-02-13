@@ -6,6 +6,8 @@ import _ from 'lodash';
 import {ToastProvider} from "../../providers/toast/toast";
 import {LoaderProvider} from "../../providers/loader/loader";
 import {ProfilePage} from "../profile/profile";
+import config from "../../config";
+import {InAppBrowser} from "@ionic-native/in-app-browser";
 
 @IonicPage()
 @Component({
@@ -20,7 +22,8 @@ export class EditProfilePage {
                 public storage: Storage,
                 public accountProvider: AccountProvider,
                 public toast: ToastProvider,
-                public loader: LoaderProvider) {
+                public loader: LoaderProvider,
+                public iab: InAppBrowser) {
     }
 
     ionViewWillEnter() {
@@ -41,6 +44,12 @@ export class EditProfilePage {
             this.toast.show('Profile updated!');
             this.navCtrl.setRoot(ProfilePage);
             loader.dismiss();
+        });
+    }
+
+    changePassword() {
+        this.iab.create(config.password_reset_link, '_self', {
+            zoom: 'no'
         });
     }
 
