@@ -6,13 +6,13 @@
     </ion-header>
 
     <ion-content>
-        <ion-row padding-top padding-left *ngIf="user">
+        <ion-row padding-top padding-left *ngIf="latestProfile">
             <ion-col col-3 padding-top>
-                <img [src]="user.picture" *ngIf="user?.picture"/>
-                <img src="assets/images/avatar.png" *ngIf="!user?.picture"/>
+                <img [src]="latestProfile.picture" *ngIf="latestProfile?.picture"/>
+                <img src="assets/images/avatar.png" *ngIf="!latestProfile?.picture"/>
             </ion-col>
             <ion-col col-9 padding style="margin-top: 18px;">
-                <h4 no-margin>{{user?.name}}</h4>
+                <h4 no-margin>{{latestProfile?.name}}</h4>
             </ion-col>
         </ion-row>
 

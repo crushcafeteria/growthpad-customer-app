@@ -11,12 +11,12 @@ export class NetworkProvider {
                 public alertCtrl: AlertController) {
     }
 
-    isOnline(timeout= 6000) {
+    isOnline(userID, timeout = 6000) {
         return new Promise(resolve => {
-            this.http.get(settings.url + 'ping').timeout(timeout).subscribe(() => {
-                resolve(true)
+            this.http.get(settings.url + 'ping/' + userID).timeout(timeout).subscribe(res => {
+                resolve(res)
             }, err => {
-                resolve(false);
+                resolve(err);
             });
         });
     }

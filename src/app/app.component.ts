@@ -26,6 +26,7 @@ export class MyApp {
     offlineMsgDisplayed = false;
     user = null;
     config: any;
+    latestProfile = null;
 
     constructor(public platform: Platform,
                 public statusBar: StatusBar,
@@ -78,9 +79,11 @@ export class MyApp {
 
     monitorNetConnection(timeout = 8000) {
         setInterval(() => {
-            this.network.isOnline().then(res => {
+            this.network.isOnline((this.user) ? this.user.id : 'false').then(res => {
+                console.log(res)
                 if (res) {
                     this.storage.set('online', true);
+                    this.latestProfile = res['profile'];
                     this.pingTries = 0;
 
                     if (this.offlineMsgDisplayed) {
@@ -125,7 +128,7 @@ export class MyApp {
     loadProfile() {
         this.storage.get('profile').then(profile => {
             if (profile) {
-                this.user = profile;
+                this.user = this.latestProfile = profile;
             }
         });
     }
