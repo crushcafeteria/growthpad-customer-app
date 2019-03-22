@@ -1,0 +1,61 @@
+page-verify-payment {
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        margin-bottom: .5rem;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 8px;
+        line-height: 1.5;
+        color: #55595c;
+        background-color: #fff;
+        background-image: none;
+        border: .0625rem solid #ccc;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+    .input-group {
+        display: table;
+        width: 100%;
+        margin-top: .8rem;
+    }
+    .input-group > div {
+        display: table-cell;
+        vertical-align: middle; /* needed for Safari */
+    }
+    .input-group-icon {
+        background: #eee;
+        color: #777;
+        padding: 0 12px;
+        border-radius: 5px 0 0 5px;
+        border: 1px solid #ddd;
+    }
+    .input-group-area {
+        width: 100%;
+    }
+
+    .input-group input {
+        display: block;
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #cccccc;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+
+    .form-control:focus, .input-group input:focus {
+        border-color: #66afe9;
+        outline: 0;
+    }
+
+
+    .list-md {
+        margin: -1px 0 16px;
+        border: 1px solid #ddd;
+    }
+}

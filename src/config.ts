@@ -27,6 +27,10 @@ export const config = {
             INDOOR: 'Indoor Event',
             OUTDOOR: 'Outdoor Event',
         }
+    },
+    mpesa: {
+        till_no: '206493',
+        name: 'IREN GROWTHPAD'
     }
 };
 

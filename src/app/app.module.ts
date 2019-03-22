@@ -44,6 +44,8 @@ import {MyAdsPageModule} from "../pages/my-ads/my-ads.module";
 import {CodePush} from "@ionic-native/code-push";
 import {CateringOptionsPageModule} from "../pages/catering-options/catering-options.module";
 import {FeedbackPageModule} from "../pages/feedback/feedback.module";
+import {VerifyPaymentPageModule} from "../pages/verify-payment/verify-payment.module";
+import {SocialSharing} from "@ionic-native/social-sharing";
 
 @NgModule({
     declarations: [
@@ -79,7 +81,8 @@ import {FeedbackPageModule} from "../pages/feedback/feedback.module";
         ListSpAdsPageModule,
         MyAdsPageModule,
         CateringOptionsPageModule,
-        FeedbackPageModule
+        FeedbackPageModule,
+        VerifyPaymentPageModule
     ],
     bootstrap: [IonicApp],
     entryComponents: [
@@ -103,7 +106,8 @@ import {FeedbackPageModule} from "../pages/feedback/feedback.module";
         FilePath,
         Camera,
         File,
-        CodePush
+        CodePush,
+        SocialSharing
     ]
 })
 export class AppModule {

@@ -1,15 +1,7 @@
 import {Component} from '@angular/core';
-import {
-    ActionSheetController,
-    AlertController,
-    IonicPage,
-    ModalController,
-    NavController,
-    Platform
-} from 'ionic-angular';
+import {ActionSheetController, AlertController, IonicPage, NavController, Platform} from 'ionic-angular';
 import {Storage} from "@ionic/storage";
 import {ToastProvider} from "../../providers/toast/toast";
-import {AlertProvider} from "../../providers/alert/alert";
 import {NetworkProvider} from "../../providers/network/network";
 import {Camera, CameraOptions} from "@ionic-native/camera";
 import _ from 'lodash';
@@ -19,8 +11,7 @@ import {AccountProvider} from "../../providers/account/account";
 import config from "../../config";
 import {LocationPage} from "../location/location";
 import {EditProfilePage} from "../edit-profile/edit-profile";
-
-declare var cordova: any;
+import {SocialSharing} from "@ionic-native/social-sharing";
 
 @IonicPage()
 @Component({
@@ -31,7 +22,6 @@ export class ProfilePage {
 
     user = null;
 
-    public likes: number = 0;
     public picture: any;
     public picPreview: any;
     public picPath: any;
@@ -40,7 +30,6 @@ export class ProfilePage {
     public savingDisabled: boolean = false;
     public savingIcon: any = 'checkmark-circle';
     public localPicUrl: any;
-    public savingTeaser: any = false;
     config = null;
     pictureData = null;
 
@@ -52,10 +41,8 @@ export class ProfilePage {
                 public filePath: FilePath,
                 public file: File,
                 public toast: ToastProvider,
-                public alertCtrl: AlertController,
-                public alertProvider: AlertProvider,
+                public social: SocialSharing,
                 public network: NetworkProvider,
-                private modalCtrl: ModalController,
                 public accountProvider: AccountProvider) {
         this.initialize();
         this.config = config;
@@ -121,14 +108,6 @@ export class ProfilePage {
         });
     }
 
-    // Create a new name for the image
-    createFileName() {
-        var d = new Date(),
-            n = d.getTime(),
-            newFileName = n + ".jpg";
-        return newFileName;
-    }
-
     uploadImage() {
         this.savingText = 'Uploading';
         this.savingDisabled = true;
@@ -152,54 +131,6 @@ export class ProfilePage {
         });
     }
 
-    changePreferences() {
-        // this.navCtrl.push(SetupPage, {
-        //     next: MePage,
-        //     title: 'Manage your preferences',
-        //     loadProfile: true
-        // });
-    }
-
-    updateTeaser() {
-        const prompt = this.alertCtrl.create({
-            title: 'Update teaser message',
-            message: "This message will be displayed publicly on your profile",
-            inputs: [
-                {
-                    name: 'teaser',
-                    placeholder: 'Type your message...',
-                    type: 'text'
-                },
-            ],
-            buttons: [
-                {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    handler: data => {
-                        this.toast.show('Updating your teaser regularly increases your profile popularity');
-                    }
-                },
-                {
-                    text: 'Save',
-                    handler: data => {
-                        console.log(data);
-                        this.savingTeaser = true;
-                        // this.authProvider.updateTeaserMessage(data.teaser).then(res => {
-                        //     if (_.has(res, 'error')) {
-                        //         this.toast.show(res['error']);
-                        //     } else {
-                        //         this.user = res['profile'];
-                        //         this.toast.show('Teaser message updated successfully!');
-                        //     }
-                        //     this.savingTeaser = false;
-                        // })
-                    }
-                }
-            ]
-        });
-        prompt.present();
-    }
-
     showEditProfile() {
         this.navCtrl.push(EditProfilePage);
     }
@@ -208,6 +139,15 @@ export class ProfilePage {
         this.navCtrl.push(LocationPage, {
             next: ProfilePage,
             title: 'Change location'
+        });
+    }
+
+    share() {
+        this.social.shareWithOptions({
+            message: 'Hello there! I just came across the IREN Growthpad app and it is very useful. You can get it here:- ',
+            subject: 'Tell others about Growthpad',
+            url: 'https://play.google.com/store/apps/details?id=com.irenkenya.growthpad.customer.app&hl=en',
+            chooserTitle: 'Download the IREN Growthpad app',
         });
     }
 }

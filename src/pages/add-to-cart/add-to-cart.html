@@ -1,9 +1,8 @@
 <ion-header>
     <ion-navbar color="primary">
-        <ion-title>Review your order</ion-title>
+        <ion-title>You are ordering</ion-title>
     </ion-navbar>
 </ion-header>
-
 
 <ion-content padding>
 
@@ -20,33 +19,10 @@
     <ion-row>
         <!--Product/service information-->
         <ion-col col-12 text-center>
-            <h3>You are ordering {{ad.name}}</h3>
+            <h3>{{ad.name}}</h3>
             <p>
                 {{ad.description}}
             </p>
-        </ion-col>
-
-        <!--Delivery location-->
-        <ion-col col-12 *ngIf="ad.category == 'AGROVET'">
-            <ion-card>
-                <ion-card-header text-center>
-                    Delivery Location
-                </ion-card-header>
-                <ion-list no-border>
-                    <img
-                        src="https://www.mapquestapi.com/staticmap/v5/map?key={{config.mapquest_key}}&locations={{deliveryLocation.coordinates.lon}},{{deliveryLocation.coordinates.lat}}&zoom=12&size=400,300">
-                    <ion-item>
-                        <ion-icon name="pin" item-start large></ion-icon>
-                        <h2>{{deliveryLocation.name}}</h2>
-                        <p>{{deliveryLocation.coordinates.lon}}, {{deliveryLocation.coordinates.lat}}</p>
-                    </ion-item>
-                </ion-list>
-            </ion-card>
-        </ion-col>
-        <ion-col col-12 margin-bottom text-center *ngIf="ad.category == 'AGROVET'">
-            <button ion-button color="dark" icon-start small (click)="changeLocation()" outline padding-left padding-right>
-                Change Location
-            </button>
         </ion-col>
 
         <!--Catering options-->
@@ -76,17 +52,53 @@
             </ion-card>
         </ion-col>
 
+        <!--Payment Instructions-->
+        <ion-card>
+            <ion-card-header>
+                How to pay with M-PESA
+            </ion-card-header>
+            <ion-list margin-bottom>
+                <ion-item>1. On the M-PESA menu, select Lipa na MPESA</ion-item>
+                <ion-item>2. Choose Buy Goods And Services</ion-item>
+                <ion-item>3. Enter till number {{config.mpesa.till_no}}</ion-item>
+                <ion-item>4. Enter the amount you wish to pay</ion-item>
+                <ion-item>5. Enter your PIN and confirm</ion-item>
+            </ion-list>
+        </ion-card>
+
         <!--Extra order instructions-->
-        <ion-col col-12 margin-bottom>
-            <p text-muted>Type additional instructions about your order in the box below</p>
-            <textarea placeholder="Optional..." style="width: 100%; height: 100px;" [(ngModel)]="instructions"
-                      padding></textarea>
+        <ion-col col-12 margin-bottom margin-top *ngIf="canAddExtraInstructions">
+            <ion-card>
+                <ion-card-header>
+                    Additional Information
+                </ion-card-header>
+                <ion-card-content padding-top>
+                    <textarea placeholder="Type extra order information here..." style="width: 100%; height: 100px;" [(ngModel)]="instructions" padding></textarea>
+                </ion-card-content>
+            </ion-card>
+        </ion-col>
+        <br>
+        <br>
+        <ion-col col-12 text-center *ngIf="ad.category == 'AGROVET'">
+            <button ion-button color="primary" clear icon-start full
+                    *ngIf="!canAddExtraInstructions"
+                    (click)="showExtraInstructions()"
+                    outline padding-left padding-right>
+                Add extra order info
+            </button>
+        </ion-col>
+
+        <!--Delivery location-->
+        <ion-col col-12 text-center *ngIf="ad.category == 'AGROVET'">
+            <button ion-button color="primary" icon-start full (click)="changeLocation()" clear padding-left padding-right>
+                Change your delivery location
+            </button>
         </ion-col>
 
         <ion-col col-12 padding>
             <button ion-button color="secondary" icon-start block (click)="createOrder()">
                 <ion-icon name="checkmark-circle"></ion-icon>
-                Order this item
+                Place Order
             </button>
         </ion-col>
     </ion-row>

@@ -17,20 +17,14 @@ export class ListAdsPage {
 
     category;
     label;
-    isLoading = false;
+    isLoading = true;
     page = null;
     ads = null;
     hasMoreData = true;
     search = false;
     q = null;
-    step = 1;
     radius = config.default_radius;
     places = null;
-    params = {
-        item: null,
-        locationQ: null,
-        location: null
-    }
 
     public eventOptions = null;
 
@@ -39,7 +33,6 @@ export class ListAdsPage {
                 private popCtrl: PopoverController,
                 public adProvider: AdProvider,
                 public toast: ToastProvider,
-                public supportProvider: SupportProvider,
                 public alertCtrl: AlertController) {
         this.category = this.navParams.get('category');
         this.label = this.navParams.get('label');
@@ -52,9 +45,11 @@ export class ListAdsPage {
             this.adProvider.nearByAds(this.category, 'EVERYTHING', this.radius).then(res => {
                 this.ads = res;
                 this.isLoading = false;
-                this.step = 2;
             });
         }
+
+        // Load ads
+        this.loadAds();
     }
 
     showSearchOptions(event) {
@@ -146,49 +141,7 @@ export class ListAdsPage {
         this.navCtrl.push(ViewAdPage, {
             ad: ad,
             eventOptions: this.eventOptions,
-            deliveryLocation: this.params.location
         });
-    }
-
-    suggestLocation() {
-        if (this.params.item && this.params.locationQ) {
-            if (this.params.locationQ && this.params.locationQ.length > 1) {
-
-                this.isLoading = true;
-                this.places = null;
-                this.step = 1;
-
-                this.supportProvider.suggestLocations(this.params.locationQ).then(res => {
-                    if (_.has(res, 'error')) {
-                        this.places = null;
-                        this.toast.show(res['error']);
-                    } else {
-                        this.places = res;
-                    }
-                    this.isLoading = false;
-                });
-            } else {
-                this.places = null;
-                this.isLoading = false;
-            }
-        }
-    }
-
-    saveLocation(place) {
-        this.params.location = place;
-        this.places = null;
-        this.isLoading = true;
-
-        // Load ads
-        this.adProvider.nearByAds(this.category, this.params.item, this.radius).then(res => {
-            this.ads = res;
-            this.isLoading = false;
-            this.step = 2;
-        });
-    }
-
-    findMatches() {
-        this.isLoading = true;
     }
 
     changeRadius() {

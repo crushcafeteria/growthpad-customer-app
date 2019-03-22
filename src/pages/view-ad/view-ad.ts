@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {IonicPage, ModalController, NavController, NavParams} from 'ionic-angular';
 import {Storage} from "@ionic/storage";
 import {AddToCartPage} from "../add-to-cart/add-to-cart";
+import config from "../../config";
 
 @IonicPage()
 @Component({
@@ -14,6 +15,7 @@ export class ViewAdPage {
     profile = null;
     eventOptions = null;
     deliveryLocation = null;
+    config;
 
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
@@ -21,7 +23,7 @@ export class ViewAdPage {
                 public modalCtrl: ModalController) {
         this.ad = navParams.get('ad');
         this.eventOptions = navParams.get('eventOptions');
-        this.deliveryLocation = navParams.get('deliveryLocation');
+        this.config = config;
 
         this.storage.get('profile').then(profile => {
             this.profile = profile;

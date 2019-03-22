@@ -1,0 +1,84 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <ion-title>Verify your payment</ion-title>
+        <ion-buttons end>
+            <button ion-button icon-only (click)="setVerifyMode('AUTO')" *ngIf="activeView == 'CODE'">
+                <ion-icon name="sync"></ion-icon>
+                Autodetect
+            </button>
+            <button ion-button icon-only (click)="setVerifyMode('CODE')" *ngIf="activeView == 'AUTO'">
+                <ion-icon name="card"></ion-icon>
+                Enter Code
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+    <ion-row *ngIf="activeView == 'CODE'">
+        <div class="info" text-center>
+            If your payment was not made from your Growthpad number, you can also enter
+            the M-PESA code and we will try to get it for you.
+        </div>
+        <ion-col col-12>
+            <div class="form-group">
+                <label>Enter your M-PESA code</label>
+                <input type="text" class="form-control" [(ngModel)]="mpesaCode" placeholder="M-PESA Code...">
+                <br>
+                <button ion-button color="secondary" icon-left block margin-top [disabled]="!mpesaCode" (click)="verifyMPESACode()">
+                    <ion-icon name="checkmark-circle"></ion-icon>
+                    Check Payment
+                </button>
+                <br>
+                <br>
+                <button ion-button color="secondary" block clear (click)="setVerifyMode('AUTO')">
+                    Detect payment automatically
+                </button>
+            </div>
+        </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="activeView == 'AUTO'">
+        <ion-col col-12 text-center *ngIf="!payments">
+            <img src="assets/images/loader.gif" width="200">
+            <h3 text-muted>Waiting for M-PESA payment...</h3>
+            <br>
+            <span>Used a different number?</span>
+            <br>
+            <br>
+            <button ion-button color="primary" (click)="setVerifyMode('CODE')">
+                Enter M-PESA Code
+            </button>
+        </ion-col>
+
+        <ion-col col-12 text-center padding *ngIf="payments">
+            <ion-icon name="ios-cash" large-icon></ion-icon>
+            <br>
+            <br>
+            <div class="success" text-center margin-bottom>
+                We have received a payment from you
+            </div>
+            <ion-list margin-bottom>
+                <button ion-item *ngFor="let payment of payments" (click)="confirmAction(payment)">
+                    <div>
+                        <h2>{{payment.first_name}} {{payment.last_name}}</h2>
+                    </div>
+                    <div>
+                        <ion-badge color="primary" style="margin-top: 10px !important;">
+                            Ksh {{payment.amount | number}}
+                        </ion-badge>
+                        <ion-badge color="secondary">
+                            {{payment.transaction_reference}}
+                        </ion-badge>
+                    </div>
+                </button>
+            </ion-list>
+
+            <div text-center text-muted>
+                Tap on a payment to continue
+            </div>
+        </ion-col>
+    </ion-row>
+
+</ion-content>

@@ -61,31 +61,6 @@ export class HomePage {
         });
     }
 
-    showFilters() {
-        // let filtersModal = this.modalCtrl.create(CommunityFiltersPage);
-        // filtersModal.present();
-        //
-        // filtersModal.onDidDismiss(data => {
-        //     if (data['signal'] == 'APPLY') {
-        //         // Apply filters here
-        //         this.users = null;
-        //         this.exploreProvider.filterCommunity({
-        //             location: data.location,
-        //             gender: data.gender,
-        //             ethnicity: data.ethnicity,
-        //         }).then(res => {
-        //             this.page = res;
-        //             this.users = this.page.data;
-        //             this.hasMoreData = false;
-        //             this.isSearchResult = true;
-        //         });
-        //         console.log(data);
-        //     } else if (data['signal'] == 'RETRIGGER') {
-        //         this.showFilters();
-        //     }
-        // });
-    }
-
     viewAd(ad) {
         this.navCtrl.push(ViewAdPage, {
             ad: ad

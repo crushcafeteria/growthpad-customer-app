@@ -22,11 +22,20 @@ export class CateringOptionsPage {
     public isLoading = false;
     public formReady = false;
     public btnHidden = true;
+    public counties;
+    public county = null;
 
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
                 public supportProvider: SupportProvider,
                 public toast: ToastProvider) {
+    }
+
+    ionViewWillEnter(){
+        // Get counties
+        this.supportProvider.getCounties().then(res => {
+            this.counties = res;
+        });
     }
 
     suggestLocation() {
@@ -49,7 +58,7 @@ export class CateringOptionsPage {
         this.xlocation = place;
         this.locationQ = place.display_name;
         this.places = null;
-        this.validate()
+        // this.validate()
     }
 
     saveForm() {
@@ -93,10 +102,15 @@ export class CateringOptionsPage {
             errors.push('Please add your location')
         }
 
+        if (!this.county) {
+            hasError = true
+            errors.push('Please select your county')
+        }
+
         if (hasError) {
             this.btnHidden = true;
             this.formReady = false;
-            this.toast.show(errors.join('\n* '))
+            this.toast.show(errors.join('\n '))
         } else {
             this.btnHidden = false;
             this.formReady = true;

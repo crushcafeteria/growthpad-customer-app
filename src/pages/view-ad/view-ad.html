@@ -65,6 +65,23 @@
             </ion-list>
         </ion-col>
 
+
+        <ion-col col-12 no-padding>
+            <ion-card>
+                <ion-list no-border>
+                    <img
+                        src="https://www.mapquestapi.com/staticmap/v5/map?key={{config.mapquest_key}}&locations={{ad?.publisher.location.display_name}}&zoom=14&size=400,300">
+                    <ion-item>
+                        <ion-icon name="pin" item-start large></ion-icon>
+                        <h2>{{ad?.publisher.location.display_name}}</h2>
+                        <p>{{ad?.publisher.location.lat}}, {{ad?.publisher.location.lon}}</p>
+                    </ion-item>
+                </ion-list>
+            </ion-card>
+        </ion-col>
+
+
+
         <ion-col col-12>
             <small text-muted>
                 Posted under {{ad.category}}
@@ -73,8 +90,7 @@
 
         <ion-col col-12 padding-top>
             <button ion-button icon-start color="secondary" solid (click)="addToCart(ad)" block>
-                <ion-icon name="cart"></ion-icon>
-                {{(ad.category == 'CATERING') ? 'Request this service' : 'Order this item'}}
+                <ion-icon name="cart"></ion-icon> Checkout
             </button>
         </ion-col>
     </ion-row>

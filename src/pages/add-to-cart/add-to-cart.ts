@@ -6,7 +6,6 @@ import {OrdersPage} from "../orders/orders";
 import {ToastProvider} from "../../providers/toast/toast";
 import {Storage} from "@ionic/storage";
 import config from "../../config";
-import {LocationPage} from "../location/location";
 import {ProfilePage} from "../profile/profile";
 
 @IonicPage()
@@ -22,6 +21,7 @@ export class AddToCartPage {
     config;
     eventOptions = null;
     deliveryLocation = null;
+    canAddExtraInstructions = false;
 
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
@@ -39,8 +39,6 @@ export class AddToCartPage {
         });
 
         this.config = config
-
-        console.log(this.eventOptions, this.ad);
     }
 
     closeModal() {
@@ -62,10 +60,11 @@ export class AddToCartPage {
     }
 
     changeLocation() {
-        this.navCtrl.push(LocationPage, {
-            next: ProfilePage,
-            title: 'Change delivery location'
-        });
+        this.navCtrl.push(ProfilePage);
+    }
+
+    showExtraInstructions() {
+        this.canAddExtraInstructions = true;
     }
 
 }

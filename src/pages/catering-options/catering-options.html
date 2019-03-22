@@ -15,37 +15,42 @@
             </div>
 
             <!--Event info-->
-            <ion-list>
-                <ion-item>
-                    <ion-label>Event Type</ion-label>
-                    <ion-select placeholder="Choose" [(ngModel)]="xtype">
-                        <ion-option value="WEDDING">Wedding</ion-option>
-                        <ion-option value="FUNERAL">Funeral</ion-option>
-                        <ion-option value="GRADUATION">Graduation Party</ion-option>
-                        <ion-option value="BIRTHDAY">Birthday Party</ion-option>
-                        <ion-option value="FAMILY">Family Gathering</ion-option>
-                        <ion-option value="CORPORATE">Corporate Event</ion-option>
-                    </ion-select>
-                </ion-item>
-                <ion-item text-left>
-                    <ion-label fixed class="fix" text-muted>{{xattendees}} People Expected</ion-label>
-                    <ion-range min="0" max="500" color="primary" pin="true" [(ngModel)]="xattendees">
-                        <ion-label slot="start">-200</ion-label>
-                        <ion-label slot="end">200</ion-label>
-                    </ion-range>
-                </ion-item>
-                <ion-item>
-                    <ion-label>Venue</ion-label>
-                    <ion-select placeholder="Choose" [(ngModel)]="xvenue">
-                        <ion-option value="INDOOR">Indoor Venue</ion-option>
-                        <ion-option value="OUTDOOR">Outdoor Venue</ion-option>
-                    </ion-select>
-                </ion-item>
-                <ion-item>
-                    <ion-label fixed>Location</ion-label>
-                    <ion-input type="text" placeholder="Location" text-right [(ngModel)]="locationQ" (keyup)="suggestLocation()"></ion-input>
-                </ion-item>
-            </ion-list>
+            <ion-item>
+                <ion-label>Event Type</ion-label>
+                <ion-select placeholder="Choose" [ngModel]="xtype" interface="action-sheet">
+                    <ion-option value="WEDDING">Wedding</ion-option>
+                    <ion-option value="FUNERAL">Funeral</ion-option>
+                    <ion-option value="GRADUATION">Graduation Party</ion-option>
+                    <ion-option value="BIRTHDAY">Birthday Party</ion-option>
+                    <ion-option value="FAMILY">Family Gathering</ion-option>
+                    <ion-option value="CORPORATE">Corporate Event</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label fixed>Attendance</ion-label>
+                <ion-input type="number" placeholder="" text-right [ngModel]="xattendees"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label>Venue</ion-label>
+                <ion-select placeholder="Choose" [ngModel]="xvenue" interface="action-sheet">
+                    <ion-option value="INDOOR">Indoor Venue</ion-option>
+                    <ion-option value="OUTDOOR">Outdoor Venue</ion-option>
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label>County</ion-label>
+                <ion-select placeholder="Choose" [ngModel]="county" interface="action-sheet">
+                    <div *ngFor="let county of counties">
+                        <ion-option [value]="county.key">{{county.value}}</ion-option>
+                    </div>
+
+                </ion-select>
+            </ion-item>
+            <ion-item>
+                <ion-label fixed>Location</ion-label>
+                <ion-input type="text" placeholder="Location" text-right [(ngModel)]="locationQ"
+                           (keyup)="suggestLocation()"></ion-input>
+            </ion-item>
 
 
         </ion-col>
@@ -73,8 +78,10 @@
                 </ion-list>
             </ion-col>
         </ion-row>
-        <button ion-button color="secondary" icon-left [hidden]="btnHidden" (click)="saveForm()" block>
-            <ion-icon name="checkmark-circle"></ion-icon> Find Caterers
+
+        <button ion-button color="secondary" icon-left [hidden]="!xlocation" (click)="saveForm()" full>
+            <ion-icon name="checkmark-circle"></ion-icon>
+            Find Caterers
         </button>
 
     </ion-row>
