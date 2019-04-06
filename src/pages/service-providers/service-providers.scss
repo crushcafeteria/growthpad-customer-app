@@ -1,5 +1,4 @@
-page-home {
-
+page-service-providers {
     .name {
         display: block;
         font-size: 16px;
@@ -27,6 +26,7 @@ page-home {
     .pin {
         break-inside: avoid;
         margin-bottom: 20px;
+        display: inline-block;
     }
 
     ion-card-content ion-icon {

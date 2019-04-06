@@ -1,0 +1,103 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Service Providers</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+    <ion-refresher (ionRefresh)="reloadPage($event)">
+        <ion-refresher-content
+            pullingText="Pull to refresh"
+            refreshingText="Refreshing..."></ion-refresher-content>
+    </ion-refresher>
+
+    <!--Loader-->
+    <ion-row *ngIf="isLoading">
+        <ion-col col-3></ion-col>
+        <ion-col col-6 text-center text-muted>
+            <img src="assets/images/loader.gif" alt="">
+            <h5>Loading...</h5>
+        </ion-col>
+    </ion-row>
+
+    <!--Title-->
+    <ion-row *ngIf="!isLoading && SPs.length">
+        <ion-col>
+            <h5 text-center text-muted>
+                Tap a service provider to view their products
+            </h5>
+            <hr>
+        </ion-col>
+    </ion-row>
+
+    <!--SP listings-->
+    <ion-row>
+        <ion-col class="pins">
+            <div *ngFor="let sp of SPs" class="pin">
+                <a href="#!" (click)="viewSPAds(sp)">
+                    <ion-card>
+                        <img [src]="sp.picture" *ngIf="sp.picture"/>
+                        <img src="assets/images/avatar.png" *ngIf="!sp.picture"/>
+                        <ion-card-content>
+                            <div class="name ellipsize">{{sp.name}}</div>
+
+                            <small text-muted icon-start *ngIf="sp.location">
+                                <ion-icon name="pin"></ion-icon>
+                                {{sp.location.display_name.split(',')[0]}}
+                            </small>
+                            <small text-muted icon-start *ngIf="!sp.location">
+                                <ion-icon name="pin"></ion-icon>
+                                Not Available
+                            </small>
+
+                            <br>
+                            <small text-muted icon-start>
+                                <ion-icon name="locate"></ion-icon>
+                                {{sp.distance}} KMs away
+                            </small>
+                        </ion-card-content>
+                    </ion-card>
+                </a>
+            </div>
+        </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="!isLoading && !SPs">
+        <ion-col text-center text-muted>
+            <ion-icon name="alert" style="font-size: 4em;"></ion-icon>
+            <br>
+            <h3>Nothing to display</h3>
+        </ion-col>
+    </ion-row>
+
+    <ion-row>
+        <ion-col col-12 text-center *ngIf="!hasMoreData">
+            <br>
+            <br>
+            The End
+            <br>
+            <br>
+            <br>
+        </ion-col>
+    </ion-row>
+
+    <!--&lt;!&ndash;Cart Button&ndash;&gt;-->
+    <!--<ion-fab bottom right>-->
+    <!--<button ion-fab color="secondary" (click)="goToOrders()">-->
+    <!--<ion-icon name="basket"></ion-icon>-->
+    <!--</button>-->
+    <!--</ion-fab>-->
+
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+        <ion-infinite-scroll-content
+            loadingSpinner="bubbles"
+            loadingText="Getting some more..."
+            *ngIf="hasMoreData">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+</ion-content>

@@ -51,6 +51,7 @@ export class ViewOrderPage {
             } else {
                 loader.dismiss();
                 this.loadOrder().then(() => {
+                    this.toast.show('You have cancelled this order');
                     loader.dismiss();
                 });
             }

@@ -11,14 +11,20 @@
         <ion-row>
             <ion-col>
                 <form [formGroup]="loginForm">
-                    <ion-list inset class="no-border">
-                        <ion-item>
+                    <ion-list inset class="">
+                        <ion-item *ngIf="!usingID">
                             <ion-label>Email</ion-label>
-                            <ion-input type="email" formControlName="email" text-right></ion-input>
+                            <ion-input type="email" formControlName="email"></ion-input>
+                        </ion-item>
+                        <ion-item *ngIf="usingID">
+                            <ion-label>ID Number</ion-label>
+                            <ion-input type="number" formControlName="id"></ion-input>
                         </ion-item>
                         <ion-item>
                             <ion-label>Password</ion-label>
-                            <ion-input type="password" formControlName="password" text-right></ion-input>
+                            <ion-input [type]="passType" formControlName="password"></ion-input>
+                            <button *ngIf="!showPass" ion-button color="dark" type="button" item-right (click)="showPassword(true)"> <ion-icon name="eye-off"></ion-icon></button>
+                            <button *ngIf="showPass" ion-button color="dark" type="button" item-right (click)="showPassword(false)"> <ion-icon name="eye"></ion-icon></button>
                         </ion-item>
                     </ion-list>
 
@@ -44,6 +50,10 @@
                     <ion-icon name="undo"></ion-icon>
                     Reset
                 </button>
+            </ion-col>
+            <ion-col text-center margin-top>
+                <a href="#!" *ngIf="!usingID" (click)="toggleID(true)" text-white>Login with ID number</a>
+                <a href="#!" *ngIf="usingID" (click)="toggleID(false)" text-white>Login with email</a>
             </ion-col>
         </ion-row>
 

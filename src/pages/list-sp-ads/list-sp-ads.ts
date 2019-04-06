@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {AdProvider} from "../../providers/ad/ad";
 import {ViewAdPage} from "../view-ad/view-ad";
+import _ from 'lodash';
 
 @IonicPage()
 @Component({
@@ -10,8 +11,8 @@ import {ViewAdPage} from "../view-ad/view-ad";
 })
 export class ListSpAdsPage {
 
-    SP;
-    ads;
+    SP = null;
+    ads = null;
     isLoading = true;
 
     constructor(public navCtrl: NavController,
@@ -21,7 +22,9 @@ export class ListSpAdsPage {
 
         // Load SP ads
         this.adProvider.getSPAds(this.SP.id).then(res => {
-            this.ads = res;
+            if(!_.has(res, 'error')){
+                this.ads = res;
+            }
             this.isLoading = false;
         });
     }

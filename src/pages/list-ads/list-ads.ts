@@ -4,8 +4,6 @@ import {SearchOptionsComponent} from "../../components/search-options/search-opt
 import {AdProvider} from "../../providers/ad/ad";
 import {ToastProvider} from "../../providers/toast/toast";
 import {ViewAdPage} from "../view-ad/view-ad";
-import {SupportProvider} from "../../providers/support/support";
-import _ from 'lodash';
 import config from "../../config";
 
 @IonicPage()
@@ -25,6 +23,7 @@ export class ListAdsPage {
     q = null;
     radius = config.default_radius;
     places = null;
+    county = null;
 
     public eventOptions = null;
 
@@ -36,6 +35,7 @@ export class ListAdsPage {
                 public alertCtrl: AlertController) {
         this.category = this.navParams.get('category');
         this.label = this.navParams.get('label');
+        this.county = this.navParams.get('county');
 
         if (this.category == 'CATERING') {
             this.eventOptions = this.navParams.get('eventOptions');
@@ -74,7 +74,7 @@ export class ListAdsPage {
     loadAds(pageNo = 1) {
         return new Promise(resolve => {
             this.isLoading = true;
-            this.adProvider.getAds(this.category, pageNo).then(res => {
+            this.adProvider.getAds(this.category, this.county, pageNo).then(res => {
                 this.page = res;
                 this.ads = res['data'];
                 this.isLoading = false;
@@ -183,5 +183,17 @@ export class ListAdsPage {
             }
         });
         alert.present();
+    }
+
+    filter(ev: any) {
+        if(ev.target.value) {
+            this.searchAds(this.category, ev.target.value);
+        } else {
+            this.loadAds();
+        }
+    }
+
+    toggleSearch(state) {
+        this.search = (state) ? false : true;
     }
 }

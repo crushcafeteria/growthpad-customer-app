@@ -1,19 +1,30 @@
 <ion-header>
     <ion-navbar color="primary">
         <ion-title>Showing {{label}}</ion-title>
-        <!--<ion-buttons end>-->
-            <!--<button ion-button icon-only (click)="changeRadius()">-->
-                <!--<ion-icon name="locate"></ion-icon> in {{radius}} kms-->
-            <!--</button>-->
-            <!--<button ion-button icon-only (click)="reloadPage()" *ngIf="search">-->
-                <!--<ion-icon name="close-circle"></ion-icon>-->
-                <!--Reset-->
-            <!--</button>-->
-        <!--</ion-buttons>-->
+        <ion-buttons end>
+            <button ion-button icon-only (click)="toggleSearch(search)" *ngIf="!search">
+                <ion-icon name="search"></ion-icon>
+            </button>
+            <button ion-button icon-only (click)="toggleSearch(search)" *ngIf="search">
+                <ion-icon name="close"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 
 <ion-content padding>
+
+    <!--Search-->
+    <ion-row *ngIf="search">
+        <ion-col margin-bottom>
+            <ion-searchbar
+                [(ngModel)]="q"
+                showCancelButton="false"
+                (ionInput)="filter($event)"
+                (ionCancel)="hideSearch($event)">
+            </ion-searchbar>
+        </ion-col>
+    </ion-row>
 
     <ion-refresher (ionRefresh)="reloadPage($event)">
         <ion-refresher-content

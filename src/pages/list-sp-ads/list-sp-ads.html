@@ -35,4 +35,13 @@
             </div>
         </ion-col>
     </ion-row>
+
+    <ion-row *ngIf="!isLoading && !ads">
+        <ion-col text-center text-muted>
+            <ion-icon name="alert" style="font-size: 4em;"></ion-icon>
+            <br>
+            <h3>No inventory available</h3>
+        </ion-col>
+    </ion-row>
+
 </ion-content>

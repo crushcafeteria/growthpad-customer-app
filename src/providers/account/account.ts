@@ -39,11 +39,12 @@ export class AccountProvider {
         });
     }
 
-    saveLocation(place) {
+    saveLocation(place, county) {
         return new Promise(resolve => {
             this.storage.get('token').then(token => {
                 this.http.post(config.url + 'location/update', {
-                    location: JSON.stringify(place)
+                    location: JSON.stringify(place),
+                    county: county
                 }, {
                     headers: new Authorization().attachToken(token.value)
                 })
@@ -111,6 +112,16 @@ export class AccountProvider {
                     email: payload.email,
                     message: payload.message
                 })
+                    .subscribe(data => {
+                        resolve(data);
+                    });
+            }
+        );
+    }
+
+    getSPs() {
+        return new Promise(resolve => {
+                this.http.get(config.url + 'sp/fetch')
                     .subscribe(data => {
                         resolve(data);
                     });

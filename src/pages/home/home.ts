@@ -1,16 +1,17 @@
 import {Component} from '@angular/core';
-import {MenuController, NavController, PopoverController} from 'ionic-angular';
+import {AlertController, MenuController, NavController, PopoverController} from 'ionic-angular';
 import {SearchOptionsComponent} from "../../components/search-options/search-options";
 import {AdProvider} from "../../providers/ad/ad";
 import {ViewAdPage} from "../view-ad/view-ad";
 import {OrdersPage} from "../orders/orders";
-import {ListAdsPage} from "../list-ads/list-ads";
-import {PostAdPage} from "../post-ad/post-ad";
 import {Storage} from "@ionic/storage";
 import {LandingPage} from "../landing/landing";
 import {LocationPage} from "../location/location";
 import {ToastProvider} from "../../providers/toast/toast";
 import {CateringOptionsPage} from "../catering-options/catering-options";
+import {SupportProvider} from "../../providers/support/support";
+import _ from 'lodash';
+import {ListAdsPage} from "../list-ads/list-ads";
 
 @Component({
     selector: 'page-home',
@@ -22,7 +23,7 @@ export class HomePage {
     ads = null;
     isLoading = false;
     hasMoreData = true;
-
+    counties = null;
     loop = null;
 
     constructor(public navCtrl: NavController,
@@ -30,7 +31,9 @@ export class HomePage {
                 public adProvider: AdProvider,
                 public storage: Storage,
                 public menuCtrl: MenuController,
-                public toast: ToastProvider) {
+                public toast: ToastProvider,
+                public alertCtrl: AlertController,
+                public supportProvider: SupportProvider) {
         this.storage.get('profile').then(profile => {
             if (!profile) {
                 this.navCtrl.setRoot(LandingPage);
@@ -42,40 +45,15 @@ export class HomePage {
 
         // Enable sidemenu
         this.menuCtrl.enable(true, 'sidemenu');
-    }
 
-    loadMore(infiniteScroll) {
-        let nextPage = this.page.current_page + 1;
-
-        this.adProvider.getAds(nextPage).then(res => {
-            this.page = res;
-            for (let i = 0; i < res['data'].length; i++) {
-                this.ads.push(res['data'][i]);
-            }
-
-            if (this.page.current_page == this.page.last_page) {
-                this.hasMoreData = false;
-            }
-
-            infiniteScroll.complete();
-        });
-    }
-
-    viewAd(ad) {
-        this.navCtrl.push(ViewAdPage, {
-            ad: ad
+        // Get counties
+        this.supportProvider.getCounties().then(res => {
+            this.counties = res;
         });
     }
 
     getListings(category, label) {
-        if(category == 'CATERING'){
-            this.navCtrl.push(CateringOptionsPage);
-        } else {
-            this.navCtrl.push(ListAdsPage, {
-                category: category,
-                label: label
-            });
-        }
+        this.showCounties(category, label);
     }
 
     showSearchOptions(event) {
@@ -88,8 +66,39 @@ export class HomePage {
         this.navCtrl.push(OrdersPage);
     }
 
-    postAd() {
-        this.navCtrl.push(PostAdPage);
+    showCounties(category, label) {
+
+
+        let alert = this.alertCtrl.create();
+        alert.setTitle('Choose a county');
+
+        _.forEach(this.counties, function (county) {
+            alert.addInput({
+                type: 'radio',
+                label: county.value,
+                value: county.key,
+            });
+        });
+
+        alert.addButton('Cancel');
+        alert.addButton({
+            text: 'Continue',
+            handler: data => {
+                if (category == 'CATERING') {
+                    this.navCtrl.push(CateringOptionsPage, {
+                        county: data
+                    });
+                } else {
+                    this.navCtrl.push(ListAdsPage, {
+                        category: category,
+                        label: label,
+                        county: data
+                    });
+                }
+            }
+        });
+
+        alert.present();
     }
 
 }

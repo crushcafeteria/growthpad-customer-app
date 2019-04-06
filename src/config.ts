@@ -31,7 +31,9 @@ export const config = {
     mpesa: {
         till_no: '206493',
         name: 'IREN GROWTHPAD'
-    }
+    },
+
+    disclaimer: 'https://growthpad.irenkenya.com/disclaimer'
 };
 
 export default config;

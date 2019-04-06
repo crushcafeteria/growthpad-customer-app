@@ -11,10 +11,10 @@ export class AdProvider {
                 public storage: Storage) {
     }
 
-    getAds(category, pageNo = 1) {
+    getAds(category, county, pageNo = 1) {
         return new Promise((resolve) => {
             this.storage.get('token').then(token => {
-                this.http.get(config.url + 'ads?category=' + category + '&page=' + pageNo, {
+                this.http.get(config.url + 'ads?category=' + category + '&county=' + county + '&page=' + pageNo, {
                     headers: new Authorization().attachToken(token.value)
                 })
                     .subscribe(res => {

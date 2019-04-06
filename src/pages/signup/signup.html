@@ -15,7 +15,7 @@
 
                         <ion-item>
                             <ion-label>Names</ion-label>
-                            <ion-input type="text" formControlName="name" text-right></ion-input>
+                            <ion-input type="text" formControlName="name"></ion-input>
                         </ion-item>
                         <div *ngIf="!signUpForm.controls.name.valid && signUpForm.controls.name.dirty" text-white>
                             Enter your full names
@@ -23,7 +23,7 @@
 
                         <ion-item>
                             <ion-label>Email</ion-label>
-                            <ion-input type="email" formControlName="email" text-right></ion-input>
+                            <ion-input type="email" formControlName="email"></ion-input>
                         </ion-item>
                         <div *ngIf="!signUpForm.controls.email.valid && signUpForm.controls.email.dirty" text-white>
                             Enter your email address
@@ -31,7 +31,7 @@
 
                         <ion-item>
                             <ion-label>Mobile Number</ion-label>
-                            <ion-input type="number" formControlName="telephone" text-right></ion-input>
+                            <ion-input type="number" formControlName="telephone"></ion-input>
                         </ion-item>
                         <div *ngIf="!signUpForm.controls.telephone.valid && signUpForm.controls.telephone.dirty"
                              text-white>
@@ -40,7 +40,7 @@
 
                         <ion-item>
                             <ion-label>Gender</ion-label>
-                            <ion-select formControlName="gender" text-right>
+                            <ion-select formControlName="gender">
                                 <ion-option selected value="">Choose</ion-option>
                                 <ion-option value="M">Male</ion-option>
                                 <ion-option value="F">Female</ion-option>
@@ -52,12 +52,17 @@
 
                         <ion-item>
                             <ion-label>Password</ion-label>
-                            <ion-input type="password" formControlName="password" text-right></ion-input>
+                            <ion-input type="password" formControlName="password"></ion-input>
                         </ion-item>
                         <div *ngIf="!signUpForm.controls.password.valid && signUpForm.controls.password.dirty"
                              text-white>
                             Enter your password
                         </div>
+
+                        <ion-item>
+                            <ion-label>I accept the <a target="_blank" [href]="config.disclaimer">terms & conditions</a></ion-label>
+                            <ion-checkbox color="dark" formControlName="accept"></ion-checkbox>
+                        </ion-item>
 
                     </ion-list>
 

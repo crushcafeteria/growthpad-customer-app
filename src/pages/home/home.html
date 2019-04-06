@@ -11,9 +11,9 @@
 
     <ion-row>
         <ion-col col-12>
-            <h4 text-center text-muted>Tap on a service to begin</h4>
+            <h4 text-center text-muted>Select a category</h4>
         </ion-col>
-        <ion-col col-6>
+        <ion-col col-6 margin-bottom>
             <a href="#!" (click)="getListings('AGROVET', 'Agrovets')">
                 <ion-card>
                     <img src="assets/images/agrovet.jpg"/>
@@ -21,7 +21,7 @@
                 </ion-card>
             </a>
         </ion-col>
-        <ion-col col-6>
+        <ion-col col-6 margin-bottom>
             <a href="#!" (click)="getListings('CATERING', 'Caterers')">
                 <ion-card>
                     <img src="assets/images/catering.jpg"/>
@@ -29,14 +29,30 @@
                 </ion-card>
             </a>
         </ion-col>
-        <!--<ion-col col-12>-->
-            <!--<a href="#!" (click)="getListings('HOTELIER', 'Hoteliers')">-->
-                <!--<ion-card>-->
-                    <!--<img src="assets/images/hotelier.jpg"/>-->
-                    <!--<div class="card-title">Hoteliers</div>-->
-                <!--</ion-card>-->
-            <!--</a>-->
-        <!--</ion-col>-->
+        <ion-col col-6 margin-bottom>
+            <a href="#!" (click)="getListings('CROP_PROTECTION', 'Crop Protection')">
+                <ion-card>
+                    <img src="assets/images/crop.jpg"/>
+                    <div class="card-title">Crop Protection</div>
+                </ion-card>
+            </a>
+        </ion-col>
+        <ion-col col-6 margin-bottom>
+            <a href="#!" (click)="getListings('LOGISTICS', 'Logistics')">
+                <ion-card>
+                    <img src="assets/images/logistics.jpg"/>
+                    <div class="card-title">Logistics</div>
+                </ion-card>
+            </a>
+        </ion-col>
+        <ion-col col-6 margin-bottom>
+            <a href="#!" (click)="getListings('CONSULTANCY', 'Consultancy')">
+                <ion-card>
+                    <img src="assets/images/consultancy.jpg"/>
+                    <div class="card-title">Consultancy</div>
+                </ion-card>
+            </a>
+        </ion-col>
     </ion-row>
 
 </ion-content>

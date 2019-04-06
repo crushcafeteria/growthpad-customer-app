@@ -21,6 +21,7 @@ export class SignupPage {
 
     public signUpForm;
     public counties = null;
+    public config;
 
     constructor(public navCtrl: NavController,
                 public formBuilder: FormBuilder,
@@ -36,8 +37,10 @@ export class SignupPage {
             email: [null, Validators.compose([Validators.required, Validators.email])],
             telephone: [null, Validators.required],
             gender: [null, Validators.required],
-            password: [null, Validators.required]
+            password: [null, Validators.required],
+            accept: [null, Validators.required],
         });
+        this.config = config;
     }
 
     ionViewWillEnter() {
@@ -57,22 +60,26 @@ export class SignupPage {
     }
 
     signUp() {
-        this.storage.get('online').then(online => {
-            if (online) {
-                let loader = this.loader.show('Signing up...');
-                this.accountProvider.signup(this.signUpForm.value).then(res => {
-                    if (_.has(res, 'error')) {
-                        this.toast.show(res['error']);
-                    } else {
-                        this.toast.show('Account registered! Please login to proceed');
-                        this.navCtrl.setRoot(LandingPage);
-                    }
-                    loader.dismiss();
-                });
-            } else {
-                this.network.showRecovery(null);
-            }
-        })
+        if(!this.signUpForm.value.accept) {
+            alert('You MUST accept the terms and conditions');
+        } else {
+            this.storage.get('online').then(online => {
+                if (online) {
+                    let loader = this.loader.show('Signing up...');
+                    this.accountProvider.signup(this.signUpForm.value).then(res => {
+                        if (_.has(res, 'error')) {
+                            this.toast.show(res['error']);
+                        } else {
+                            this.toast.show('Account registered! Please login to proceed');
+                            this.navCtrl.setRoot(LandingPage);
+                        }
+                        loader.dismiss();
+                    });
+                } else {
+                    this.network.showRecovery(null);
+                }
+            });
+        }
     }
 
 }

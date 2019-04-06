@@ -46,6 +46,7 @@ import {CateringOptionsPageModule} from "../pages/catering-options/catering-opti
 import {FeedbackPageModule} from "../pages/feedback/feedback.module";
 import {VerifyPaymentPageModule} from "../pages/verify-payment/verify-payment.module";
 import {SocialSharing} from "@ionic-native/social-sharing";
+import {ServiceProvidersPageModule} from "../pages/service-providers/service-providers.module";
 
 @NgModule({
     declarations: [
@@ -82,7 +83,8 @@ import {SocialSharing} from "@ionic-native/social-sharing";
         MyAdsPageModule,
         CateringOptionsPageModule,
         FeedbackPageModule,
-        VerifyPaymentPageModule
+        VerifyPaymentPageModule,
+        ServiceProvidersPageModule
     ],
     bootstrap: [IonicApp],
     entryComponents: [

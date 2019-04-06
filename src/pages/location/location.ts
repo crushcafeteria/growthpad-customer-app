@@ -20,8 +20,12 @@ export class LocationPage {
     public q: string;
     isLoading = false;
     places = null;
-    title = 'Add location';
+    title = 'One more step...';
     isAd = false;
+    counties = null;
+    county = null;
+    placeholder = 'Find a specific location in your county'
+    step = 1;
 
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
@@ -38,6 +42,10 @@ export class LocationPage {
             this.isAd = true;
             this.title = 'Add a location to this item';
         }
+
+        this.supportProvider.getCounties().then(res => {
+            this.counties = res;
+        });
     }
 
     suggest(event) {
@@ -65,7 +73,7 @@ export class LocationPage {
         } else {
             let loader = this.loader.show('Saving...');
             this.storage.set('location', place);
-            this.accountProvider.saveLocation(place).then(res => {
+            this.accountProvider.saveLocation(place, this.county).then(res => {
                 if (res['status'] == 'OK') {
                     this.storage.set('profile', res['user']);
                     this.toast.show('Your location has been successfully stored');
