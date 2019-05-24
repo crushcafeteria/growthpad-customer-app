@@ -91,10 +91,10 @@ export class AccountProvider {
         );
     }
 
-    getNearbySPs(category, radius, page = 1) {
+    getSPByCounty(category, county, page = 1) {
         return new Promise(resolve => {
             this.storage.get('token').then(token => {
-                this.http.get(config.url + 'sp/fetch?category=' + category + '&radius=' + radius + '&page=' + page, {
+                this.http.get(config.url + 'sp/county?category=' + category + '&county=' + county + '&page=' + page, {
                     headers: new Authorization().attachToken(token.value)
                 })
                     .subscribe(data => {

@@ -39,6 +39,8 @@ export class AddToCartPage {
         });
 
         this.config = config
+
+        console.log(this.eventOptions);
     }
 
     closeModal() {

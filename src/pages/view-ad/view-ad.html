@@ -41,8 +41,8 @@
                     <ion-avatar item-start>
                         <img src="http://placehold.it/200x200">
                     </ion-avatar>
-                    <p>Posted By</p>
-                    <h2>{{ad.publisher.name}}</h2>
+                    <p>Sold By</p>
+                    <h2>{{ad.publisher.business_name}}</h2>
                 </ion-item>
                 <!--<ion-item no-padding>-->
                     <!--<ion-icon name="call" item-start></ion-icon>-->
@@ -90,7 +90,7 @@
 
         <ion-col col-12 padding-top>
             <button ion-button icon-start color="secondary" solid (click)="addToCart(ad)" block>
-                <ion-icon name="cart"></ion-icon> Checkout
+                <ion-icon name="cart"></ion-icon> Place an order
             </button>
         </ion-col>
     </ion-row>

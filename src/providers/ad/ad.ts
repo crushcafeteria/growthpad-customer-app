@@ -41,10 +41,10 @@ export class AdProvider {
         });
     }
 
-    getSPAds(spID) {
+    getSPAds(spID, page = 1) {
         return new Promise((resolve) => {
             this.storage.get('token').then(token => {
-                this.http.get(config.url + 'sp/ads?spID=' + spID, {
+                this.http.get(config.url + 'sp/ads?spID=' + spID + '&page=' + page, {
                     headers: new Authorization().attachToken(token.value)
                 })
                     .subscribe(res => {
@@ -69,13 +69,12 @@ export class AdProvider {
         });
     }
 
-    nearByAds(category, item, radius) {
+    nearByAds(category, county) {
         return new Promise((resolve) => {
             this.storage.get('token').then(token => {
                 this.http.post(config.url + 'ads/nearby', {
                     category: category,
-                    q: item,
-                    radius: radius
+                    county: county
                 }, {
                     headers: new Authorization().attachToken(token.value)
                 })

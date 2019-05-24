@@ -3,7 +3,7 @@
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>Service Providers</ion-title>
+        <ion-title>{{label}} in {{county | titlecase}} County</ion-title>
     </ion-navbar>
 </ion-header>
 
@@ -24,16 +24,6 @@
         </ion-col>
     </ion-row>
 
-    <!--Title-->
-    <ion-row *ngIf="!isLoading && SPs.length">
-        <ion-col>
-            <h5 text-center text-muted>
-                Tap a service provider to view their products
-            </h5>
-            <hr>
-        </ion-col>
-    </ion-row>
-
     <!--SP listings-->
     <ion-row>
         <ion-col class="pins">
@@ -43,21 +33,14 @@
                         <img [src]="sp.picture" *ngIf="sp.picture"/>
                         <img src="assets/images/avatar.png" *ngIf="!sp.picture"/>
                         <ion-card-content>
-                            <div class="name ellipsize">{{sp.name}}</div>
+                            <div class="name ellipsize">{{sp.business_name}}</div>
 
                             <small text-muted icon-start *ngIf="sp.location">
                                 <ion-icon name="pin"></ion-icon>
                                 {{sp.location.display_name.split(',')[0]}}
                             </small>
                             <small text-muted icon-start *ngIf="!sp.location">
-                                <ion-icon name="pin"></ion-icon>
-                                Not Available
-                            </small>
-
-                            <br>
-                            <small text-muted icon-start>
-                                <ion-icon name="locate"></ion-icon>
-                                {{sp.distance}} KMs away
+                                <ion-icon name="pin"></ion-icon> {{sp.county | titlecase}} County
                             </small>
                         </ion-card-content>
                     </ion-card>
@@ -70,7 +53,7 @@
         <ion-col text-center text-muted>
             <ion-icon name="alert" style="font-size: 4em;"></ion-icon>
             <br>
-            <h3>Nothing to display</h3>
+            <h3>No {{label | lowercase}} found in this county</h3>
         </ion-col>
     </ion-row>
 

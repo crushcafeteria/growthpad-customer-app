@@ -43,31 +43,31 @@ export class ListSpPage {
     loadSPs() {
         return new Promise(resolve => {
             this.isLoading = true;
-            this.accountProvider.getNearbySPs(this.category, this.radius).then(res => {
-                console.log(res);
-                this.page = res;
-                this.SPs = res['data'];
-                this.isLoading = false;
-                resolve(true)
-            });
+            // this.accountProvider.getNearbySPs(this.category, this.radius).then(res => {
+            //     console.log(res);
+            //     this.page = res;
+            //     this.SPs = res['data'];
+            //     this.isLoading = false;
+            //     resolve(true)
+            // });
         });
     }
 
     loadMore(infiniteScroll) {
         let nextPage = this.page.current_page + 1;
 
-        this.accountProvider.getNearbySPs(this.category, this.radius, nextPage).then(res => {
-            this.page = res;
-            for (let i = 0; i < res['data'].length; i++) {
-                this.SPs.push(res['data'][i]);
-            }
-
-            if (this.page.current_page == this.page.last_page) {
-                this.hasMoreData = false;
-            }
-
-            infiniteScroll.complete();
-        });
+        // this.accountProvider.getNearbySPs(this.category, this.radius, nextPage).then(res => {
+        //     this.page = res;
+        //     for (let i = 0; i < res['data'].length; i++) {
+        //         this.SPs.push(res['data'][i]);
+        //     }
+        //
+        //     if (this.page.current_page == this.page.last_page) {
+        //         this.hasMoreData = false;
+        //     }
+        //
+        //     infiniteScroll.complete();
+        // });
     }
 
     viewSPAds(sp) {

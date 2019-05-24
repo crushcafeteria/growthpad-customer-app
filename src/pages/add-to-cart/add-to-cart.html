@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar color="primary">
-        <ion-title>You are ordering</ion-title>
+        <ion-title>Confirm your order</ion-title>
     </ion-navbar>
 </ion-header>
 
@@ -39,31 +39,32 @@
                 <ion-list>
                     <ion-item>
                         <ion-icon name="keypad" item-start></ion-icon>
-                        Planning a {{config.catering.event_types[eventOptions.type]}}
+                        Event Type: {{config.catering.event_types[eventOptions.type]}}
                     </ion-item>
                     <ion-item>
                         <ion-icon name="home" item-start></ion-icon>
-                        Will be an {{config.catering.venues[eventOptions.venue]}}
+                        Venue: {{config.catering.venues[eventOptions.venue]}}
                     </ion-item>
                     <ion-item>
                         <ion-icon name="contact" item-start></ion-icon>
-                        {{eventOptions.attendees}} people might attend
-                    </ion-item>
-                    <ion-item>
-                        <ion-icon name="pin" item-start></ion-icon>
-                        Held @ {{eventOptions.location.name}}
+                        PAX: {{eventOptions.attendees}}
                     </ion-item>
                 </ion-list>
             </ion-card>
         </ion-col>
 
         <!--Payment Instructions-->
-        <ion-card>
-            <ion-list margin-bottom>
-                <ion-item>Offered By: {{ad.publisher.business_name}}</ion-item>
-                <ion-item>Location: {{ad.publisher.location.display_name}}</ion-item>
+        <ion-col col-12>
+            <ion-list margin-top>
+                <ion-item no-padding>
+                    <ion-avatar item-start>
+                        <img src="http://placehold.it/200x200">
+                    </ion-avatar>
+                    <p>Sold By</p>
+                    <h2>{{ad.publisher.business_name}}</h2>
+                </ion-item>
             </ion-list>
-        </ion-card>
+        </ion-col>
 
         <!--Extra order instructions-->
         <ion-col col-12 margin-bottom margin-top *ngIf="canAddExtraInstructions">
@@ -101,6 +102,12 @@
                 <ion-icon name="checkmark-circle"></ion-icon>
                 Place Order
             </button>
+        </ion-col>
+
+        <ion-col text-center>
+            <small text-muted>
+                Clicking this button will send your order details to the seller
+            </small>
         </ion-col>
     </ion-row>
 

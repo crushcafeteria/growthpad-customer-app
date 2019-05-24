@@ -12,72 +12,35 @@
             <!--Event info-->
             <ion-item>
                 <ion-label>Event Type</ion-label>
-                <ion-select placeholder="Choose" [ngModel]="xtype" interface="action-sheet">
+                <ion-select placeholder="Choose" [(ngModel)]="xtype" interface="action-sheet">
                     <ion-option value="WEDDING">Wedding</ion-option>
                     <ion-option value="FUNERAL">Funeral</ion-option>
                     <ion-option value="GRADUATION">Graduation Party</ion-option>
                     <ion-option value="BIRTHDAY">Birthday Party</ion-option>
                     <ion-option value="FAMILY">Family Gathering</ion-option>
                     <ion-option value="CORPORATE">Corporate Event</ion-option>
+                    <ion-option value="OTHER">Other</ion-option>
                 </ion-select>
             </ion-item>
             <ion-item>
-                <ion-label fixed>Attendance</ion-label>
-                <ion-input type="number" placeholder="" text-right [ngModel]="xattendees"></ion-input>
+                <ion-label fixed>PAX</ion-label>
+                <ion-input type="number" placeholder="" text-right [(ngModel)]="xattendees"></ion-input>
             </ion-item>
             <ion-item>
                 <ion-label>Venue</ion-label>
-                <ion-select placeholder="Choose" [ngModel]="xvenue" interface="action-sheet">
+                <ion-select placeholder="Choose" [(ngModel)]="xvenue" interface="action-sheet">
                     <ion-option value="INDOOR">Indoor Venue</ion-option>
                     <ion-option value="OUTDOOR">Outdoor Venue</ion-option>
                 </ion-select>
             </ion-item>
-            <ion-item>
-                <ion-label>County</ion-label>
-                <ion-select placeholder="Choose" [ngModel]="county" interface="action-sheet">
-                    <div *ngFor="let county of counties">
-                        <ion-option [value]="county.key">{{county.value}}</ion-option>
-                    </div>
-
-                </ion-select>
-            </ion-item>
-            <ion-item>
-                <ion-label fixed>Location</ion-label>
-                <ion-input type="text" placeholder="Location" text-right [(ngModel)]="locationQ"
-                           (keyup)="suggestLocation()"></ion-input>
-            </ion-item>
-
-
         </ion-col>
 
-        <!--Loader-->
-        <ion-row *ngIf="isLoading">
-            <ion-col col-3></ion-col>
-            <ion-col col-6 text-center text-muted>
-                <img src="assets/images/loader.gif" alt="">
-                <h5>Loading...</h5>
-            </ion-col>
-        </ion-row>
-
-        <!--Location-->
-        <ion-row>
-            <ion-col col-12 *ngIf="places">
-                <ion-list>
-                    <button ion-item *ngFor="let place of places" (click)="saveLocation(place)">
-                        <ion-avatar item-start>
-                            <img src="assets/icon/pin.png">
-                        </ion-avatar>
-                        <h2>{{place.name}}</h2>
-                        <p>{{place.coordinates.lat}}, {{place.coordinates.lon}}</p>
-                    </button>
-                </ion-list>
-            </ion-col>
-        </ion-row>
-
-        <button ion-button color="secondary" icon-left [hidden]="!xlocation" (click)="saveForm()" full>
-            <ion-icon name="checkmark-circle"></ion-icon>
-            Find Caterers
-        </button>
+        <ion-col text-center>
+            <button ion-button color="secondary" icon-left (click)="saveForm()">
+                <ion-icon name="checkmark-circle"></ion-icon>
+                Continue
+            </button>
+        </ion-col>
 
     </ion-row>
 

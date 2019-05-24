@@ -66,7 +66,7 @@ export class ProfilePage {
 
     showPictureOptions() {
         const actionSheet = this.actionSheetCtrl.create({
-            title: 'Change your picture',
+            title: 'Change your personal picture',
             buttons: [
                 {
                     text: 'Snap with camera',

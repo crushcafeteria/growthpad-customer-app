@@ -1,9 +1,8 @@
 import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {SupportProvider} from "../../providers/support/support";
-import _ from 'lodash';
 import {ToastProvider} from "../../providers/toast/toast";
-import {ListAdsPage} from "../list-ads/list-ads";
+import {ServiceProvidersPage} from "../service-providers/service-providers";
 
 @IonicPage()
 @Component({
@@ -15,7 +14,6 @@ export class CateringOptionsPage {
     xtype: null
     xattendees: null
     xvenue: null
-    xlocation: null
 
     public locationQ = '';
     public places
@@ -29,92 +27,49 @@ export class CateringOptionsPage {
                 public navParams: NavParams,
                 public supportProvider: SupportProvider,
                 public toast: ToastProvider) {
-    }
-
-    ionViewWillEnter(){
-        // Get counties
-        this.supportProvider.getCounties().then(res => {
-            this.counties = res;
-        });
-    }
-
-    suggestLocation() {
-        this.xlocation = null;
-        if (this.locationQ.length > 2) {
-            this.isLoading = true;
-            this.supportProvider.suggestLocations(this.locationQ).then(res => {
-                if (_.has(res, 'error')) {
-                    this.places = null;
-                    this.toast.show(res['error']);
-                } else {
-                    this.places = res;
-                }
-                this.isLoading = false;
-            });
-        }
-    }
-
-    saveLocation(place) {
-        this.xlocation = place;
-        this.locationQ = place.display_name;
-        this.places = null;
-        // this.validate()
+        this.county = this.navParams.get('county');
     }
 
     saveForm() {
-        this.navCtrl.push(ListAdsPage, {
-            eventOptions: this.makeEventOptions(),
-            category: 'CATERING',
-            label: 'Caterers',
-        });
+        if (this.validate()) {
+            this.navCtrl.push(ServiceProvidersPage, {
+                eventOptions: this.makeEventOptions(),
+                category: 'CATERING',
+                label: 'Catering',
+                county: this.county
+            }).then(() => { // Page removes iself from nav stack
+                const startIndex = this.navCtrl.getActive().index - 1;
+                this.navCtrl.remove(startIndex, 1);
+            });
+        }
+
     }
 
     private makeEventOptions() {
         return {
             type: this.xtype,
             attendees: this.xattendees,
-            venue: this.xvenue,
-            location: this.xlocation,
+            venue: this.xvenue
         }
     }
 
     validate() {
-        console.log(this.makeEventOptions(), this.locationQ)
-        let hasError = false;
-        let errors = new Array();
         if (!this.xtype) {
-            hasError = true
-            errors.push('Please choose an event type')
+            this.toast.show('Please choose an event type');
+            return false;
         }
 
         if (!this.xattendees) {
-            hasError = true
-            errors.push('Please enter expected attendees')
+            this.toast.show('Please enter expected attendees');
+            return false;
         }
 
         if (!this.xvenue) {
-            hasError = true
-            errors.push('Please choose a venue type')
+            this.toast.show('Please choose a venue type');
+            return false;
         }
 
-        if (!this.xlocation) {
-            hasError = true
-            errors.push('Please add your location')
-        }
-
-        if (!this.county) {
-            hasError = true
-            errors.push('Please select your county')
-        }
-
-        if (hasError) {
-            this.btnHidden = true;
-            this.formReady = false;
-            this.toast.show(errors.join('\n '))
-        } else {
-            this.btnHidden = false;
-            this.formReady = true;
-        }
+        return true;
     }
 
 }

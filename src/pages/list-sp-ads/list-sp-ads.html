@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar color="primary">
-        <ion-title>Products - {{SP.name}}</ion-title>
+        <ion-title>{{SP.business_name}}</ion-title>
     </ion-navbar>
 </ion-header>
 
@@ -43,5 +43,25 @@
             <h3>No inventory available</h3>
         </ion-col>
     </ion-row>
+
+
+    <ion-row>
+        <ion-col col-12 text-center *ngIf="!hasMoreData">
+            <br>
+            <br>
+            The End
+            <br>
+            <br>
+            <br>
+        </ion-col>
+    </ion-row>
+
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)" *ngIf="page?.current_page <= page?.last_page">
+        <ion-infinite-scroll-content
+            loadingSpinner="bubbles"
+            loadingText="Getting some more..."
+            *ngIf="hasMoreData">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 
 </ion-content>

@@ -54,7 +54,7 @@ appcenter codepush release-cordova -a growthpad/Growthpad-Customer-App -d Produc
 To release a service provider update, run this command:-
 ```
 appcenter codepush release-cordova -a growthpad/Growthpad-Service-Provider-App -d Production --description "[DEPLOYMENT DESCRIPTION]" -m -t *
-```
+```i
 
 # Log of possible bugs
 

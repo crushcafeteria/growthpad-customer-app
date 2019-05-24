@@ -2,9 +2,8 @@ import {Component} from '@angular/core';
 import {IonicPage, NavController, NavParams} from 'ionic-angular';
 import {AccountProvider} from "../../providers/account/account";
 import {ToastProvider} from "../../providers/toast/toast";
-import {ListSpPage} from "../list-sp/list-sp";
 import {ListSpAdsPage} from "../list-sp-ads/list-sp-ads";
-
+import _ from 'lodash';
 
 @IonicPage()
 @Component({
@@ -15,11 +14,12 @@ export class ServiceProvidersPage {
 
     label;
     category;
-    radius;
     SPs = null;
     isLoading = true;
     page;
     hasMoreData = true;
+    county;
+    eventOptions = null;
 
     constructor(public navCtrl: NavController,
                 public navParams: NavParams,
@@ -27,17 +27,20 @@ export class ServiceProvidersPage {
                 public toast: ToastProvider) {
         this.category = this.navParams.get('category');
         this.label = this.navParams.get('label');
-        this.radius = this.navParams.get('radius');
-
+        this.county = this.navParams.get('county');
+        if (this.category == 'CATERING') {
+            this.eventOptions = this.navParams.get('eventOptions');
+        }
         this.loadSPs();
     }
 
     reloadPage() {
         this.navCtrl.pop();
-        this.navCtrl.push(ListSpPage, {
+        this.navCtrl.push(ServiceProvidersPage, {
             category: this.category,
             label: this.label,
-            radius: this.radius
+            county: this.county,
+            eventOptions: (this.eventOptions) ? this.eventOptions : null
         });
         this.toast.show('This page has been reloaded');
     }
@@ -45,10 +48,15 @@ export class ServiceProvidersPage {
     loadSPs() {
         return new Promise(resolve => {
             this.isLoading = true;
-            this.accountProvider.getNearbySPs(this.category, this.radius).then(res => {
-                console.log(res);
+            this.accountProvider.getSPByCounty(this.category, this.county).then(res => {
+                console.log(_.size(res['data']));
                 this.page = res;
-                this.SPs = res['data'];
+                if (!_.size(res['data'])) {
+                    this.SPs = null;
+                    console.log('Nulll!')
+                } else {
+                    this.SPs = res['data'];
+                }
                 this.isLoading = false;
                 resolve(true)
             });
@@ -58,7 +66,7 @@ export class ServiceProvidersPage {
     loadMore(infiniteScroll) {
         let nextPage = this.page.current_page + 1;
 
-        this.accountProvider.getNearbySPs(this.category, this.radius, nextPage).then(res => {
+        this.accountProvider.getSPByCounty(this.category, this.county, nextPage).then(res => {
             this.page = res;
             for (let i = 0; i < res['data'].length; i++) {
                 this.SPs.push(res['data'][i]);
@@ -74,7 +82,9 @@ export class ServiceProvidersPage {
 
     viewSPAds(sp) {
         this.navCtrl.push(ListSpAdsPage, {
-            sp: sp
+            category: this.category,
+            sp: sp,
+            eventOptions: this.eventOptions
         });
     }
 

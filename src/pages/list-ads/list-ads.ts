@@ -41,8 +41,8 @@ export class ListAdsPage {
             this.eventOptions = this.navParams.get('eventOptions');
 
             // Load caterers around the area
-            this.isLoading = true
-            this.adProvider.nearByAds(this.category, 'EVERYTHING', this.radius).then(res => {
+            this.isLoading = true;
+            this.adProvider.nearByAds(this.category, this.county).then(res => {
                 this.ads = res;
                 this.isLoading = false;
             });

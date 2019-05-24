@@ -21,7 +21,8 @@ export const config = {
             GRADUATION: 'Graduation Party',
             BIRTHDAY: 'Birthday Party',
             FAMILY: 'Family Gathering',
-            CORPORATE: 'Corporate Event'
+            CORPORATE: 'Corporate Event',
+            OTHER: 'Other'
         },
         venues: {
             INDOOR: 'Indoor Event',

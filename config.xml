@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.irenkenya.growthpad.customer.app" version="1.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.irenkenya.growthpad.customer.app" version="1.0.6" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Growthpad</name>
     <description>Service and productivity in one go!</description>
     <author email="nelson@lipasafe.com" href="https://sodium.co.ke">Sodium Africa</author>

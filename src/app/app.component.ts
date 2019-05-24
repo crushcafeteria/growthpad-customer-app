@@ -13,7 +13,6 @@ import {ProfilePage} from "../pages/profile/profile";
 import {OrdersPage} from "../pages/orders/orders";
 import {CodePush, InstallMode, SyncStatus} from '@ionic-native/code-push';
 import {FeedbackPage} from "../pages/feedback/feedback";
-import {ServiceProvidersPage} from "../pages/service-providers/service-providers";
 
 @Component({
     templateUrl: 'app.html'
@@ -42,7 +41,6 @@ export class MyApp {
         // Side menu
         this.pages = [
             {title: 'Home', component: HomePage, icon: 'home'},
-            {title: 'List Providers', component: ServiceProvidersPage, icon: 'grid'},
             {title: 'Placed Orders', component: OrdersPage, icon: 'cart'},
             {title: 'My Profile', component: ProfilePage, icon: 'contact'},
             {title: 'Feedback', component: FeedbackPage, icon: 'mail'},
