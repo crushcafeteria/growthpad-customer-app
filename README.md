@@ -1,5 +1,4 @@
 # Project Information
-Release Password: ```kvsWchPtvNQ79Qz6mWJewawwnM9G7X```
 
 # Building a release
 ## Increment app version number
